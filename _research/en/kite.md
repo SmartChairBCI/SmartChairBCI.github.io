@@ -8,7 +8,7 @@ question: >-
   How can we build an open augmentative and alternative communication tool that is simple
   to use and adapts to each person's abilities?
 icon: kite
-status: idea             # idea | review | design | prototype | testing | results
+status: review           # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ research start date
 # next_steps:            # ✏️ add the next steps
 #   - text: First step
