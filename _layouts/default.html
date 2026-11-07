@@ -1,0 +1,20 @@
+{%- include i18n-context.html -%}
+<!doctype html>
+<html lang="{{ lang }}" class="no-js">
+<head>
+  <script>document.documentElement.className = 'js';</script>
+  {%- include head.html %}
+</head>
+<body class="layout-{{ page.layout | default: 'default' }}">
+  <a class="skip-link" href="#main">{{ t.skip_to_content }}</a>
+  {%- include header.html %}
+  <main id="main" tabindex="-1">
+    {{ content }}
+  </main>
+  {%- include footer.html %}
+  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+  {%- if page.scene or layout.scene %}
+  <script type="module" src="{{ '/assets/js/scene.js' | relative_url }}"></script>
+  {%- endif %}
+</body>
+</html>

@@ -1,0 +1,95 @@
+# ==========================================================================
+#  SmartChair — configurazione del sito
+#  Dopo aver modificato questo file, riavvia `jekyll serve` (non si ricarica da solo).
+# ==========================================================================
+
+title: SmartChair
+description: >-
+  Diario di ricerca aperto sugli ausili per la disabilità motoria basati su
+  Brain Computer Interface: progressi, esperimenti e risultati condivisi pubblicamente.
+url: "https://smartchair.it"
+baseurl: ""
+timezone: Europe/Rome
+
+# Lingue -------------------------------------------------------------------
+# L'italiano vive alla radice (/), l'inglese sotto /en/.
+default_lang: it
+languages: [it, en]
+lang: it
+locale: it_IT
+
+# Contatti e social --------------------------------------------------------
+# I campi lasciati vuoti non vengono mostrati sul sito.
+contact_email: info@smartchair.it   # TODO: sostituisci con l'indirizzo reale
+social:
+  github: https://github.com/SmartChairBCI
+  linkedin: ""
+  mastodon: ""
+  instagram: ""
+  youtube: ""
+  x: ""
+
+# Licenza dei contenuti (mostrata nel footer). Lascia vuoto per nasconderla.
+content_license:
+  name: CC BY 4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+
+# Autore delle voci del diario. Nel singolo file puoi sovrascriverlo con `author:`
+# oppure indicare più autori con `authors: [Antonio Blescia, Bones]`.
+author:
+  name: Antonio Blescia
+
+# SEO (jekyll-seo-tag)
+twitter:
+  card: summary_large_image
+# image: /assets/img/og-image.png   # TODO: immagine 1200x630 per le anteprime social
+
+# Build --------------------------------------------------------------------
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  hard_wrap: false
+  syntax_highlighter_opts:
+    disable: true
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  research:
+    output: true
+
+# Fasi di una linea di ricerca, in ordine. Le etichette sono in _data/i18n.yml → phases
+research_phases: [idea, review, design, prototype, testing, results]
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - .bundle
+  - .jekyll-cache
+
+# Valori predefiniti del front matter ---------------------------------------
+# Grazie a questi blocchi, nei file markdown basta scrivere titolo e testo:
+# lingua, layout e indirizzo vengono dedotti dalla cartella in cui si trova il file.
+defaults:
+  - scope: { path: "" }
+    values: { layout: page, lang: it, locale: it_IT }
+  - scope: { path: "en" }
+    values: { lang: en, locale: en_US }
+
+  # Voci del diario di ricerca (blog)
+  - scope: { path: "_posts/it", type: posts }
+    values: { layout: post, lang: it, locale: it_IT, kind: update, permalink: "/diario/:title/" }
+  - scope: { path: "_posts/en", type: posts }
+    values: { layout: post, lang: en, locale: en_US, kind: update, permalink: "/en/journal/:title/" }
+
+  # Linee di ricerca
+  - scope: { path: "_research/it", type: research }
+    values: { layout: research, lang: it, locale: it_IT, permalink: "/ricerche/:name/" }
+  - scope: { path: "_research/en", type: research }
+    values: { layout: research, lang: en, locale: en_US, permalink: "/en/research/:name/" }

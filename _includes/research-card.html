@@ -1,0 +1,20 @@
+{%- assign r = include.research -%}
+{%- assign r_entries = site.posts | where: "project", r.ref | where: "lang", lang -%}
+<article class="card research-card reveal">
+  <div class="research-card-top">
+    <span class="research-icon">{% include research-icon.html icon=r.icon %}</span>
+    {%- if r.codename %}<span class="codename">{{ r.codename }}</span>{% endif %}
+  </div>
+  <h3 class="card-title"><a class="card-link" href="{{ r.url | relative_url }}">{{ r.title }}</a></h3>
+  {%- unless include.compact %}
+  <p class="card-text">{{ r.summary }}</p>
+  {%- endunless %}
+  {% include phase-stepper.html status=r.status compact=true %}
+  <p class="research-card-foot">
+    {%- if r_entries.size > 0 -%}
+      {{ t.last_update }}: {% include date.html date=r_entries.first.date %} · {{ r_entries.size }} {% if r_entries.size == 1 %}{{ t.entries_count_one }}{% else %}{{ t.entries_count }}{% endif %}
+    {%- else -%}
+      {{ t.no_updates }}
+    {%- endif -%}
+  </p>
+</article>

@@ -1,0 +1,13 @@
+---
+layout: default
+scene: waves
+---
+{%- include i18n-context.html -%}
+{% include page-hero.html title=page.title lead=page.description eyebrow=page.eyebrow %}
+<div class="section">
+  <div class="container{% unless page.wide %} narrow{% endunless %}">
+    <div class="prose">
+      {{ content }}
+    </div>
+  </div>
+</div>

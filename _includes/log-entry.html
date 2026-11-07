@@ -1,0 +1,28 @@
+{%- comment -%}
+  Una voce del diario nella cronologia.
+  Parametri: post, hide_project (true nelle pagine di una singola ricerca)
+{%- endcomment -%}
+{%- assign p = include.post -%}
+{%- assign kind = p.kind | default: "update" -%}
+{%- assign proj = nil -%}
+{%- if p.project -%}{%- assign proj = site.research | where: "ref", p.project | where: "lang", lang | first -%}{%- endif -%}
+{%- assign m = p.date | date: "%-m" | minus: 1 -%}
+<li class="entry reveal" data-project="{{ p.project | default: 'general' }}" data-kind="{{ kind }}">
+  <time class="entry-date" datetime="{{ p.date | date_to_xmlschema }}">
+    <span class="entry-day">{{ p.date | date: "%-d" }}</span>
+    <span class="entry-month">{{ t.months_short[m] }} {{ p.date | date: "%Y" }}</span>
+  </time>
+  <span class="entry-node kind-node--{{ kind }}" aria-hidden="true"></span>
+  <article class="entry-body">
+    <p class="entry-meta">
+      <span class="kind kind--{{ kind }}">{{ t.kinds[kind] | default: kind }}</span>
+      {%- if proj and include.hide_project != true %}
+      <span class="entry-project">{{ proj.codename | default: proj.title }}</span>
+      {%- endif %}
+    </p>
+    <h3 class="entry-title"><a class="card-link" href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+    {%- if p.description %}
+    <p class="entry-text">{{ p.description }}</p>
+    {%- endif %}
+  </article>
+</li>

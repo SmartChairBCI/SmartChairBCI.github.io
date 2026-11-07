@@ -1,0 +1,20 @@
+---
+layout: default
+scene: waves
+---
+{%- include i18n-context.html -%}
+{%- assign researches = site.research | where: "lang", lang | sort: "order" -%}
+{% include page-hero.html title=page.title lead=page.description eyebrow=page.eyebrow %}
+<div class="section">
+  <div class="container">
+    {%- assign intro = content | strip -%}
+    {%- if intro != "" %}
+    <div class="prose prose--intro">{{ content }}</div>
+    {%- endif %}
+    <div class="card-grid">
+      {%- for r in researches %}
+      {% include research-card.html research=r %}
+      {%- endfor %}
+    </div>
+  </div>
+</div>

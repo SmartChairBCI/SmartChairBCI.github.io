@@ -1,0 +1,38 @@
+{%- assign nav = site.data.navigation[lang] -%}
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="{{ t.home_url | relative_url }}" aria-label="{{ site.title }} — Home">
+      {%- include logo.svg -%}
+      <span class="brand-name">Smart<span>Chair</span></span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+      <span class="sr-only" data-label-open="{{ t.menu }}" data-label-close="{{ t.close }}">{{ t.menu }}</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="{{ t.menu }}" data-nav>
+      <ul>
+        {%- for item in nav %}
+        {%- assign item_url = item.url | relative_url -%}
+        {%- assign is_home = false -%}
+        {%- if item.url == t.home_url -%}{%- assign is_home = true -%}{%- endif -%}
+        {%- assign active = false -%}
+        {%- if is_home -%}
+          {%- if page.url == item.url -%}{%- assign active = true -%}{%- endif -%}
+        {%- else -%}
+          {%- assign prefix_len = item.url | size -%}
+          {%- assign page_prefix = page.url | slice: 0, prefix_len -%}
+          {%- if page_prefix == item.url -%}{%- assign active = true -%}{%- endif -%}
+        {%- endif %}
+        <li><a href="{{ item_url }}"{% if active %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+        {%- endfor %}
+      </ul>
+      <a class="lang-switch" href="{{ alt_url | relative_url }}" hreflang="{{ other_lang }}" lang="{{ other_lang }}" aria-label="{{ t.switch_lang_label }}">
+        <span class="lang-current" aria-hidden="true">{{ t.lang_short }}</span>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <span class="lang-other">{{ t_other.lang_short }}</span>
+      </a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,35 @@
+---
+layout: default
+permalink: /404.html
+sitemap: false
+scene: waves
+---
+{%- comment -%}
+  GitHub Pages usa un solo 404 per tutto il sito: mostriamo entrambe le lingue
+  e uno script sceglie quella giusta in base all'indirizzo (/en/…).
+{%- endcomment -%}
+{%- assign it = site.data.i18n.it -%}
+{%- assign en = site.data.i18n.en -%}
+<section class="page-hero page-hero--404">
+  <canvas class="scene" data-scene="waves" aria-hidden="true"></canvas>
+  <div class="container page-hero-inner">
+    <p class="eyebrow"><span class="dot" aria-hidden="true"></span>404</p>
+    <div data-404="it">
+      <h1 class="page-title">{{ it.not_found_title }}</h1>
+      <p class="page-lead">{{ it.not_found_text }}</p>
+      <p><a class="btn btn--acid" href="{{ it.home_url | relative_url }}">{{ it.not_found_cta }}</a></p>
+    </div>
+    <div data-404="en" lang="en" hidden>
+      <h1 class="page-title">{{ en.not_found_title }}</h1>
+      <p class="page-lead">{{ en.not_found_text }}</p>
+      <p><a class="btn btn--acid" href="{{ en.home_url | relative_url }}">{{ en.not_found_cta }}</a></p>
+    </div>
+  </div>
+</section>
+<script>
+  if (location.pathname.indexOf('/en/') === 0) {
+    document.documentElement.lang = 'en';
+    document.querySelector('[data-404="it"]').hidden = true;
+    document.querySelector('[data-404="en"]').hidden = false;
+  }
+</script>

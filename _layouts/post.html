@@ -1,0 +1,82 @@
+---
+layout: default
+scene: waves
+---
+{%- include i18n-context.html -%}
+{%- assign words = content | number_of_words -%}
+{%- assign minutes = words | plus: 199 | divided_by: 200 | at_least: 1 -%}
+{%- assign kind = page.kind | default: "update" -%}
+{%- assign proj = nil -%}
+{%- if page.project -%}{%- assign proj = site.research | where: "ref", page.project | where: "lang", lang | first -%}{%- endif -%}
+{%- capture meta -%}
+  <span class="kind kind--{{ kind }} kind--on-dark">{{ t.kinds[kind] | default: kind }}</span>
+  {%- if proj %}<a class="hero-chip" href="{{ proj.url | relative_url }}">{{ t.research_label }}: {{ proj.codename | default: proj.title }}</a>{% endif %}
+  <span>{{ t.by }}
+    {%- if page.authors %} {% for a in page.authors %}{% unless forloop.first %}{% if forloop.last %} {{ t.and }} {% else %}, {% endif %}{% endunless %}{{ a }}{% endfor %}
+    {%- else %} {{ page.author | default: site.author.name }}{% endif -%}
+  </span>
+  <span aria-hidden="true">·</span>
+  {% include date.html date=page.date %}
+  <span aria-hidden="true">·</span>
+  <span>{{ minutes }} {{ t.min_read }}</span>
+{%- endcapture -%}
+<article class="post">
+  {% include page-hero.html title=page.title lead=page.description back_url=t.journal_url back_label=t.back_to_journal meta=meta class="page-hero--post" %}
+
+  <div class="section">
+    <div class="container narrow">
+      {%- if translation %}
+      <p class="translation-note">
+        <a href="{{ translation.url | relative_url }}" hreflang="{{ other_lang }}" lang="{{ other_lang }}">{{ t.switch_lang }} →</a>
+      </p>
+      {%- endif %}
+
+      {%- if page.image %}
+      <figure class="post-cover">
+        <img src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: '' }}" loading="eager">
+      </figure>
+      {%- endif %}
+
+      <div class="prose">
+        {{ content }}
+      </div>
+
+      {%- if page.tags.size > 0 %}
+      <ul class="tag-list tag-list--post" aria-label="Tag">
+        {%- for tag in page.tags %}<li class="tag">#{{ tag }}</li>{% endfor %}
+      </ul>
+      {%- endif %}
+
+      {%- if proj %}
+      <aside class="research-box" aria-label="{{ t.research_label }}">
+        <div class="research-box-head">
+          <span class="research-icon">{% include research-icon.html icon=proj.icon %}</span>
+          <div>
+            <p class="research-box-label">{{ t.research_label }}</p>
+            <a class="research-box-title" href="{{ proj.url | relative_url }}">{{ proj.title }}</a>
+          </div>
+        </div>
+        {% include phase-stepper.html status=proj.status compact=true %}
+      </aside>
+      {%- endif %}
+    </div>
+  </div>
+</article>
+
+{%- if page.project -%}
+  {%- assign others = site.posts | where: "lang", lang | where: "project", page.project | where_exp: "p", "p.url != page.url" -%}
+{%- else -%}
+  {%- assign others = site.posts | where: "lang", lang | where_exp: "p", "p.url != page.url" -%}
+{%- endif -%}
+{%- if others.size > 0 %}
+<section class="section section--metal" aria-labelledby="more-title">
+  <div class="container narrow-wide">
+    <h2 class="section-title" id="more-title">{{ t.other_entries }}</h2>
+    <ol class="timeline">
+      {%- for post in others limit: 3 %}
+      {% include log-entry.html post=post %}
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+{%- endif %}

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Intestazione scura con l'animazione a onde.
+  Parametri: title, lead, eyebrow, back_url, back_label, meta (HTML), class
+{%- endcomment -%}
+<header class="page-hero {{ include.class }}">
+  <canvas class="scene" data-scene="waves" aria-hidden="true"></canvas>
+  <div class="container page-hero-inner">
+    {%- if include.back_url %}
+    <a class="back-link" href="{{ include.back_url | relative_url }}"><span aria-hidden="true">←</span> {{ include.back_label }}</a>
+    {%- endif %}
+    {%- if include.eyebrow %}
+    <p class="eyebrow"><span class="dot" aria-hidden="true"></span>{{ include.eyebrow }}</p>
+    {%- endif %}
+    <h1 class="page-title">{{ include.title }}</h1>
+    {%- if include.lead %}
+    <p class="page-lead">{{ include.lead }}</p>
+    {%- endif %}
+    {%- if include.meta %}
+    <div class="page-meta">{{ include.meta }}</div>
+    {%- endif %}
+  </div>
+</header>

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Calcola le variabili di lingua usate da tutti i template:
+    lang         lingua della pagina corrente (it | en)
+    t            testi dell'interfaccia (da _data/i18n.yml)
+    other_lang   l'altra lingua
+    translation  la pagina tradotta, se esiste (stesso `ref` nel front matter)
+    alt_url      URL della traduzione, oppure la home dell'altra lingua
+{%- endcomment -%}
+{%- assign lang = page.lang | default: site.default_lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- if lang == "en" -%}{%- assign other_lang = "it" -%}{%- else -%}{%- assign other_lang = "en" -%}{%- endif -%}
+{%- assign t_other = site.data.i18n[other_lang] -%}
+{%- assign translation = nil -%}
+{%- if page.ref -%}
+  {%- assign all_docs = site.pages | concat: site.documents -%}
+  {%- assign translation = all_docs | where: "ref", page.ref | where: "lang", other_lang | first -%}
+{%- endif -%}
+{%- if translation -%}
+  {%- assign alt_url = translation.url -%}
+{%- else -%}
+  {%- assign alt_url = t_other.home_url -%}
+{%- endif -%}

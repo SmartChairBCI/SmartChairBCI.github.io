@@ -1,0 +1,202 @@
+# Testi dell'interfaccia nelle due lingue.
+# I contenuti veri (pagine, voci del diario, ricerche) stanno nei file markdown.
+
+it:
+  lang_name: Italiano
+  lang_short: IT
+  home_url: /
+  journal_url: /diario/
+  research_url: /ricerche/
+  about_url: /chi-sono/
+  contact_url: /contatti/
+  feed_url: /feed.xml
+  motto: >-
+    Abbattiamo le barriere del movimento attraverso la tecnologia aperta,
+    rendendo l'autonomia e la condivisione scientifica accessibili a tutti.
+  skip_to_content: Vai al contenuto
+  menu: Menu
+  close: Chiudi
+  switch_lang: Read in English
+  switch_lang_label: Passa alla versione inglese
+  read_entry: Leggi
+  min_read: min di lettura
+  by: di
+  and: e
+  journal: Diario di ricerca
+  latest_entries: Ultimi aggiornamenti
+  latest_entries_lead: Cosa sto facendo, cosa ha funzionato e cosa no.
+  all_entries: Tutto il diario
+  research_lines: Ricerche in corso
+  research_lines_lead: Le domande a cui sto cercando di rispondere, e a che punto sono.
+  all_research: Tutte le ricerche
+  research_label: Ricerca
+  phase: Fase
+  started: Avviata
+  last_update: Ultimo aggiornamento
+  no_updates: Ancora nessun aggiornamento
+  question: Domanda di ricerca
+  next_steps: Prossimi passi
+  done: completato
+  todo: da fare
+  steps_done: passi completati
+  materials: Materiali aperti
+  license: Licenza
+  research_journal: Il diario di questa ricerca
+  research_journal_empty: Non ci sono ancora voci del diario per questa ricerca.
+  entries_count: voci nel diario
+  entries_count_one: voce nel diario
+  back_to_journal: Torna al diario
+  back_to_research: Tutte le ricerche
+  other_entries: Altre voci del diario
+  filter_all: Tutto
+  filter_research: Ricerca
+  filter_kind: Tipo
+  general: Generale
+  no_entries: Non ci sono ancora voci in italiano.
+  rss: Feed RSS
+  follow_title: Segui la ricerca
+  follow_text: >-
+    Pubblico ogni passo, compresi gli errori. Puoi seguire il diario con il feed RSS,
+    guardare il codice su GitHub o scrivermi se vuoi contribuire.
+  footer_about: >-
+    Diario di ricerca aperto sugli ausili per la disabilità motoria basati su
+    Brain Computer Interface.
+  footer_nav: Navigazione
+  footer_follow: Seguimi
+  footer_license: Contenuti rilasciati con licenza
+  footer_code: Codice sorgente del sito
+  made_with: Ricerca aperta
+  built_with: Realizzato con il supporto di Bones, l'assistente AI del progetto
+  not_found_title: Segnale perso
+  not_found_text: La pagina che cerchi non esiste o è stata spostata.
+  not_found_cta: Torna alla home
+  phases:
+    idea: Idea
+    review: Studio della letteratura
+    design: Progettazione
+    prototype: Prototipo
+    testing: Sperimentazione
+    results: Risultati
+  kinds:
+    update: Aggiornamento
+    experiment: Esperimento
+    result: Risultato
+    note: Nota
+    explainer: Divulgazione
+  months: [gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre]
+  months_short: [gen, feb, mar, apr, mag, giu, lug, ago, set, ott, nov, dic]
+  contact:
+    email_title: Scrivimi
+    email_text: Il modo più diretto per parlare con me.
+    form_title: Componi il messaggio
+    form_text: Compila i campi e si aprirà il tuo programma di posta con il messaggio pronto da inviare.
+    name: Nome
+    subject: Oggetto
+    subject_placeholder: Collaborazione, domanda, segnalazione…
+    message: Messaggio
+    send: Apri nel programma di posta
+    fallback: Il pulsante non funziona? Scrivi direttamente a
+    github_title: Contribuisci su GitHub
+    github_text: Segnala un errore, proponi un'idea o invia una pull request. Tutto il lavoro è pubblico.
+    github_cta: Vai su GitHub
+    social_title: Social
+
+en:
+  lang_name: English
+  lang_short: EN
+  home_url: /en/
+  journal_url: /en/journal/
+  research_url: /en/research/
+  about_url: /en/about/
+  contact_url: /en/contact/
+  feed_url: /en/feed.xml
+  motto: >-
+    We break down the barriers of movement through open technology, making
+    autonomy and scientific sharing accessible to everyone.
+  skip_to_content: Skip to content
+  menu: Menu
+  close: Close
+  switch_lang: Leggi in italiano
+  switch_lang_label: Switch to the Italian version
+  read_entry: Read
+  min_read: min read
+  by: by
+  and: and
+  journal: Research journal
+  latest_entries: Latest updates
+  latest_entries_lead: What I am working on, what worked and what did not.
+  all_entries: The whole journal
+  research_lines: Ongoing research
+  research_lines_lead: The questions I am trying to answer, and where I am with each one.
+  all_research: All research lines
+  research_label: Research
+  phase: Phase
+  started: Started
+  last_update: Last update
+  no_updates: No updates yet
+  question: Research question
+  next_steps: Next steps
+  done: done
+  todo: to do
+  steps_done: steps completed
+  materials: Open materials
+  license: License
+  research_journal: Journal entries for this research
+  research_journal_empty: There are no journal entries for this research yet.
+  entries_count: journal entries
+  entries_count_one: journal entry
+  back_to_journal: Back to the journal
+  back_to_research: All research lines
+  other_entries: More journal entries
+  filter_all: All
+  filter_research: Research
+  filter_kind: Type
+  general: General
+  no_entries: There are no entries in English yet.
+  rss: RSS feed
+  follow_title: Follow the research
+  follow_text: >-
+    I publish every step, mistakes included. You can follow the journal via RSS,
+    browse the code on GitHub, or write to me if you would like to contribute.
+  footer_about: >-
+    An open research journal on assistive technology for motor disabilities
+    based on Brain Computer Interfaces.
+  footer_nav: Navigation
+  footer_follow: Follow me
+  footer_license: Content released under
+  footer_code: Website source code
+  made_with: Open research
+  built_with: Built with the support of Bones, the project's AI assistant
+  not_found_title: Signal lost
+  not_found_text: The page you are looking for does not exist or has been moved.
+  not_found_cta: Back to home
+  phases:
+    idea: Idea
+    review: Literature review
+    design: Design
+    prototype: Prototype
+    testing: Testing
+    results: Results
+  kinds:
+    update: Update
+    experiment: Experiment
+    result: Result
+    note: Note
+    explainer: Explainer
+  months: [January, February, March, April, May, June, July, August, September, October, November, December]
+  months_short: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+  contact:
+    email_title: Write to me
+    email_text: The most direct way to reach me.
+    form_title: Compose your message
+    form_text: Fill in the fields and your email app will open with the message ready to send.
+    name: Name
+    subject: Subject
+    subject_placeholder: Collaboration, question, bug report…
+    message: Message
+    send: Open in my email app
+    fallback: Button not working? Write directly to
+    github_title: Contribute on GitHub
+    github_text: Report a mistake, suggest an idea or send a pull request. All the work is public.
+    github_cta: Go to GitHub
+    social_title: Social

@@ -1,0 +1,50 @@
+{%- comment -%}
+  Opzioni di contatto senza server: mailto + GitHub + social.
+  L'indirizzo email si imposta in _config.yml → contact_email.
+{%- endcomment -%}
+{%- include i18n-context.html -%}
+{%- assign c = t.contact -%}
+<div class="contact-grid not-prose">
+  <section class="card contact-card contact-card--form" aria-labelledby="contact-form-title">
+    <h2 class="card-title" id="contact-form-title">{{ c.form_title }}</h2>
+    <p class="card-text">{{ c.form_text }}</p>
+    <form class="mailto-form" action="mailto:{{ site.contact_email }}" method="get" enctype="text/plain"
+          data-mailto-form data-email="{{ site.contact_email }}">
+      <div class="field">
+        <label for="cf-name">{{ c.name }}</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="cf-subject">{{ c.subject }}</label>
+        <input id="cf-subject" name="subject" type="text" placeholder="{{ c.subject_placeholder }}" required>
+      </div>
+      <div class="field">
+        <label for="cf-body">{{ c.message }}</label>
+        <textarea id="cf-body" name="body" rows="6" required></textarea>
+      </div>
+      <button class="btn btn--blue" type="submit">{{ c.send }}</button>
+      <p class="form-fallback">{{ c.fallback }} <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
+    </form>
+  </section>
+
+  <div class="contact-side">
+    <section class="card contact-card" aria-labelledby="contact-email-title">
+      <h2 class="card-title" id="contact-email-title">{{ c.email_title }}</h2>
+      <p class="card-text">{{ c.email_text }}</p>
+      <a class="contact-email" href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>
+    </section>
+
+    {%- if site.social.github and site.social.github != "" %}
+    <section class="card contact-card contact-card--dark" aria-labelledby="contact-gh-title">
+      <h2 class="card-title" id="contact-gh-title">{{ c.github_title }}</h2>
+      <p class="card-text">{{ c.github_text }}</p>
+      <a class="btn btn--acid btn--sm" href="{{ site.social.github }}">{{ c.github_cta }} →</a>
+    </section>
+    {%- endif %}
+
+    <section class="card contact-card" aria-labelledby="contact-social-title">
+      <h2 class="card-title" id="contact-social-title">{{ c.social_title }}</h2>
+      {% include social-links.html %}
+    </section>
+  </div>
+</div>

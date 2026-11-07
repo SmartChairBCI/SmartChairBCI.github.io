@@ -1,0 +1,26 @@
+# Voci del menu principale, per lingua.
+# Per aggiungere una sezione: crea la pagina markdown e aggiungi qui la voce in entrambe le lingue.
+
+it:
+  - title: Home
+    url: /
+  - title: Ricerche
+    url: /ricerche/
+  - title: Diario
+    url: /diario/
+  - title: Chi sono
+    url: /chi-sono/
+  - title: Contattami
+    url: /contatti/
+
+en:
+  - title: Home
+    url: /en/
+  - title: Research
+    url: /en/research/
+  - title: Journal
+    url: /en/journal/
+  - title: About
+    url: /en/about/
+  - title: Contact
+    url: /en/contact/

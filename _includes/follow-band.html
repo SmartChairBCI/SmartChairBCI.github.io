@@ -1,0 +1,18 @@
+<section class="follow-band" aria-labelledby="follow-title">
+  <div class="container follow-inner reveal">
+    <div>
+      <h2 class="follow-title" id="follow-title">{{ t.follow_title }}</h2>
+      <p>{{ t.follow_text | strip }}</p>
+    </div>
+    <div class="follow-actions">
+      <a class="btn btn--acid" href="{{ t.feed_url | relative_url }}">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M5 3a16 16 0 0 1 16 16h-3A13 13 0 0 0 5 6V3Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7V9Zm2 7.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z"/></svg>
+        {{ t.rss }}
+      </a>
+      {%- if site.social.github and site.social.github != "" %}
+      <a class="btn btn--ghost" href="{{ site.social.github }}">GitHub</a>
+      {%- endif %}
+      <a class="btn btn--ghost" href="{{ t.contact_url | relative_url }}">{{ t.contact.email_title }}</a>
+    </div>
+  </div>
+</section>

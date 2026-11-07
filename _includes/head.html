@@ -1,0 +1,22 @@
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050b24">
+  <meta name="color-scheme" content="light">
+  {% seo %}
+  {%- if translation %}
+  <link rel="alternate" hreflang="{{ lang }}" href="{{ page.url | absolute_url }}">
+  <link rel="alternate" hreflang="{{ other_lang }}" href="{{ translation.url | absolute_url }}">
+  {%- if lang == site.default_lang %}
+  <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
+  {%- else %}
+  <link rel="alternate" hreflang="x-default" href="{{ translation.url | absolute_url }}">
+  {%- endif %}
+  {%- endif %}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} — {{ t.journal }} ({{ t.lang_short }})" href="{{ t.feed_url | absolute_url }}">
+  <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="preload" href="{{ '/assets/fonts/space-grotesk-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/assets/fonts/inter-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  {%- if page.scene or layout.scene %}
+  <link rel="modulepreload" href="{{ '/assets/vendor/three/three.module.min.js' | relative_url }}">
+  {%- endif %}

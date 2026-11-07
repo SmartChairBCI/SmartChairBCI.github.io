@@ -1,0 +1,25 @@
+{%- comment -%}
+  Mostra a che punto è una ricerca lungo le fasi definite in _config.yml → research_phases.
+  Parametri: status (chiave della fase), compact (true per la versione ridotta delle card)
+{%- endcomment -%}
+{%- assign current = include.status | default: "idea" -%}
+{%- assign total = site.research_phases | size -%}
+{%- assign current_index = 1 -%}
+{%- for ph in site.research_phases -%}{%- if ph == current -%}{%- assign current_index = forloop.index -%}{%- endif -%}{%- endfor -%}
+{%- assign reached = true -%}
+<div class="phase{% if include.compact %} phase--compact{% endif %}">
+  <p class="phase-label">
+    <span class="phase-key">{{ t.phase }} {{ current_index }}/{{ total }}</span>
+    <span class="phase-current">{{ t.phases[current] | default: current }}</span>
+  </p>
+  <ol class="stepper" aria-label="{{ t.phase }}: {{ t.phases[current] }} ({{ current_index }}/{{ total }})">
+    {%- for ph in site.research_phases -%}
+    {%- if ph == current -%}{%- assign state = "current" -%}{%- elsif reached -%}{%- assign state = "done" -%}{%- else -%}{%- assign state = "todo" -%}{%- endif %}
+    <li class="step step--{{ state }}"{% if state == "current" %} aria-current="step"{% endif %}>
+      <span class="step-bar" aria-hidden="true"></span>
+      <span class="step-name">{{ t.phases[ph] }}</span>
+    </li>
+    {%- if ph == current -%}{%- assign reached = false -%}{%- endif -%}
+    {%- endfor %}
+  </ol>
+</div>

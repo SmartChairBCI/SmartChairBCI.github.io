@@ -1,0 +1,40 @@
+{%- assign nav = site.data.navigation[lang] -%}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <a class="brand brand--light" href="{{ t.home_url | relative_url }}">
+        {%- include logo.svg -%}
+        <span class="brand-name">Smart<span>Chair</span></span>
+      </a>
+      <p>{{ t.footer_about }}</p>
+      <p class="footer-motto">“{{ t.motto | strip }}”</p>
+    </div>
+
+    <nav class="footer-col" aria-label="{{ t.footer_nav }}">
+      <h2 class="footer-title">{{ t.footer_nav }}</h2>
+      <ul>
+        {%- for item in nav %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {%- endfor %}
+        <li><a href="{{ t.feed_url | relative_url }}">{{ t.rss }}</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer-col">
+      <h2 class="footer-title">{{ t.footer_follow }}</h2>
+      {% include social-links.html %}
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {{ site.time | date: "%Y" }} {{ site.title }}.
+      {%- if site.content_license.name %}
+      {{ t.footer_license }} <a href="{{ site.content_license.url }}" rel="license">{{ site.content_license.name }}</a>.
+      {%- endif %}
+    </p>
+    <p class="footer-bones">{{ t.built_with }}</p>
+    <p class="footer-open"><span class="dot" aria-hidden="true"></span>{{ t.made_with }}
+      {%- if site.social.github %} · <a href="{{ site.social.github }}">{{ t.footer_code }}</a>{% endif %}
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,86 @@
+---
+layout: default
+scene: waves
+---
+{%- include i18n-context.html -%}
+{%- assign r_entries = site.posts | where: "project", page.ref | where: "lang", lang -%}
+{%- capture meta -%}
+  {%- if page.started %}<span>{{ t.started }}: {% include date.html date=page.started %}</span>{% endif -%}
+  {%- if r_entries.size > 0 %}<span aria-hidden="true">·</span><span>{{ t.last_update }}: {% include date.html date=r_entries.first.date %}</span>{% endif -%}
+{%- endcapture -%}
+<article class="research">
+  {% include page-hero.html title=page.title lead=page.summary eyebrow=page.codename back_url=t.research_url back_label=t.back_to_research meta=meta class="page-hero--research" %}
+
+  <div class="section section--tight research-status">
+    <div class="container">
+      {% include phase-stepper.html status=page.status %}
+      {%- if page.question %}
+      <div class="question">
+        <p class="question-label">{{ t.question }}</p>
+        <p class="question-text">{{ page.question }}</p>
+      </div>
+      {%- endif %}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container research-grid">
+      <div class="prose">
+        {{ content }}
+
+        {%- if page.next_steps %}
+        {%- assign done_steps = page.next_steps | where: "done", true | size -%}
+        <h2 id="next-steps">{{ t.next_steps }}</h2>
+        <p class="checklist-progress">{{ done_steps }}/{{ page.next_steps.size }} {{ t.steps_done }}</p>
+        <ul class="checklist">
+          {%- for s in page.next_steps %}
+          <li class="{% if s.done %}is-done{% endif %}">
+            <span class="check" aria-hidden="true"></span>
+            <span class="sr-only">{% if s.done %}{{ t.done }}{% else %}{{ t.todo }}{% endif %}:</span>
+            {{ s.text }}
+          </li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+      </div>
+
+      <aside class="spec-card" aria-labelledby="spec-title">
+        <span class="research-icon research-icon--lg">{% include research-icon.html icon=page.icon %}</span>
+        <h2 class="spec-title" id="spec-title">{{ page.codename | default: page.title }}</h2>
+        <dl class="spec-list">
+          <div><dt>{{ t.phase }}</dt><dd>{{ t.phases[page.status] | default: page.status }}</dd></div>
+          {%- if page.started %}
+          <div><dt>{{ t.started }}</dt><dd>{% include date.html date=page.started %}</dd></div>
+          {%- endif %}
+          <div><dt>{{ t.last_update }}</dt><dd>{% if r_entries.size > 0 %}{% include date.html date=r_entries.first.date %}{% else %}{{ t.no_updates }}{% endif %}</dd></div>
+          {%- if page.license %}
+          <div><dt>{{ t.license }}</dt><dd>{{ page.license }}</dd></div>
+          {%- endif %}
+        </dl>
+        {%- if page.links %}
+        <h3 class="spec-subtitle">{{ t.materials }}</h3>
+        <ul class="material-links">
+          {%- for l in page.links %}
+          <li><a href="{{ l.url }}">{{ l.label }} <span aria-hidden="true">↗</span></a></li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+      </aside>
+    </div>
+  </div>
+
+  <section class="section section--metal" aria-labelledby="journal-title">
+    <div class="container narrow-wide">
+      <h2 class="section-title" id="journal-title">{{ t.research_journal }}</h2>
+      {%- if r_entries.size > 0 %}
+      <ol class="timeline">
+        {%- for post in r_entries %}
+        {% include log-entry.html post=post hide_project=true %}
+        {%- endfor %}
+      </ol>
+      {%- else %}
+      <p class="empty">{{ t.research_journal_empty }}</p>
+      {%- endif %}
+    </div>
+  </section>
+</article>
