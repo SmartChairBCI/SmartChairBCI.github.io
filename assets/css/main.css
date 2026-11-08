@@ -122,7 +122,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
-img, svg, canvas { display: block; max-width: 100%; }
+img, svg, canvas, video { display: block; max-width: 100%; }
+video { height: auto; }
 a { color: var(--blue); text-underline-offset: .18em; text-decoration-thickness: 1px; }
 a:hover { color: var(--blue-600); text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--acid); outline-offset: 3px; border-radius: 4px; }
