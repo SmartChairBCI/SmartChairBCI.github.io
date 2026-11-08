@@ -10,9 +10,15 @@ question: >-
 icon: kite
 status: review           # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ research start date
-# next_steps:            # ✏️ add the next steps
-#   - text: First step
-#     done: false
+next_steps:
+  - text: Estimate head pitch from the 4C's IR images
+    done: true
+  - text: Measure pitch accuracy against a reference
+    done: false
+  - text: Try the face model with other people
+    done: false
+  - text: Assess the EAR on IR images as a click
+    done: false
 ---
 
 ## Context
