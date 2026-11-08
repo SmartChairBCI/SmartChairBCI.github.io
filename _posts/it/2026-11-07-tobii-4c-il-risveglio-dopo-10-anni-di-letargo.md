@@ -12,8 +12,10 @@ Il tracciatore oculare che uso per [Kite](/ricerche/kite/), il mio strumento ape
 Comunicazione Aumentativa e Alternativa (CAA), è un **Tobii Eye Tracker 4C**. È uscito alla fine
 del 2016 ed era pensato per i videogiochi. Oggi ha dieci anni.
 
-Per chi lavora su GNU/Linux, come me, questi dieci anni sono stati un **letargo**. Il 4C si collega
-al computer, ma senza il software del produttore il sistema non sa cosa farne. In questa voce
+Il **letargo** di questi dieci anni è stato soprattutto quello del progetto: per molto tempo il
+lavoro su Kite si è fermato. Ora lo riprendo, e lo riprendo da GNU/Linux, dove c'è un ostacolo
+concreto: il 4C si collega al computer, ma senza il software del produttore il sistema non sa cosa
+farne. In questa voce
 racconto che cosa sa fare questo dispositivo, che cosa dice sullo sguardo e sulla testa, e come ho
 iniziato a esplorare il suo protocollo di comunicazione per svegliarlo su un sistema libero.
 
@@ -136,7 +138,7 @@ raccolti da progetti della comunità ([Eitol, s.d.](#riferimenti)). Sono però b
 non mantenuti, legati a distribuzioni di qualche anno fa. Non sono una base su cui costruire un
 ausilio aperto.
 
-È un tallone d'Achille che conosco bene. Anche la **prima versione di Kite**, circa dodici anni fa,
+È un tallone d'Achille che conosco bene. Anche la **prima versione di Kite**, circa dieci anni fa,
 girava solo su Windows. Allora era una scelta quasi obbligata. Oggi credo che uno strumento di CAA
 aperto debba poter funzionare su un sistema operativo libero, che chiunque può studiare, modificare
 e installare anche su un computer vecchio.

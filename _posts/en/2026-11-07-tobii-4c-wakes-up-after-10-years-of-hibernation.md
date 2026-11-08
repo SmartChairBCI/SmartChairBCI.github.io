@@ -12,9 +12,10 @@ The eye tracker I use for [Kite](/en/research/kite/), my open Augmentative and A
 Communication (AAC) tool, is a **Tobii Eye Tracker 4C**. It came out at the end of 2016 and was
 designed for video games. Today it is ten years old.
 
-For those of us who work on GNU/Linux, those ten years have been a **hibernation**. The 4C plugs
-into the computer, but without the manufacturer's software the system does not know what to do
-with it. In this entry I describe what this device can do, what it reports about gaze and head,
+The **hibernation** of these ten years has mostly been the project's own: for a long time, work
+on Kite came to a halt. Now I am picking it up again, and I am picking it up on GNU/Linux, where
+there is a concrete obstacle: the 4C plugs into the computer, but without the manufacturer's
+software the system does not know what to do with it. In this entry I describe what this device can do, what it reports about gaze and head,
 and how I have started exploring its communication protocol to wake it up on a free system.
 
 This is not a report of results: it is the start of a journey. There are no measurements of my own.
@@ -136,7 +137,7 @@ projects ([Eitol, n.d.](#references)). They are, however, proprietary binaries, 
 tied to distributions that are several years old. They are not a foundation on which to build an
 open assistive tool.
 
-It is an Achilles' heel I know well. The **first version of Kite**, about twelve years ago, also
+It is an Achilles' heel I know well. The **first version of Kite**, about ten years ago, also
 ran only on Windows. Back then it was an almost unavoidable choice. Today I believe an open AAC tool
 should be able to run on a free operating system, one that anyone can study, modify and install,
 even on an old computer.
