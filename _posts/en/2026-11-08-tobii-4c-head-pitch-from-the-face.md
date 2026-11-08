@@ -3,8 +3,8 @@ ref: tobii-4c-head-pitch-from-the-face
 project: kite
 kind: update
 authors: [Antonio Blescia, Bones]
-title: "Tobii 4C: recovering head pitch from the face"
-description: With only two eyes, the head's "yes" cannot be seen. I describe how the GNU/Linux driver recovers it from the 478 face points of MediaPipe Face Landmarker, what runs on the 4C's infrared images, what runs on the webcam test bench, and what I do not know yet.
+title: "Tobii 4C: recovering head pitch from the face, on a webcam for now"
+description: With only two eyes, the head's "yes" cannot be seen. I describe how I recovered the pitch from the 478 face points of MediaPipe Face Landmarker with a prototype on a USB webcam, while waiting to bring it to the Tobii 4C's infrared images, and what I do not know yet.
 tags: [eye-tracking, tobii, linux, head-pose, mediapipe, aac]
 ---
 
@@ -15,15 +15,12 @@ the yaw (the "no") and the roll (the head tilted towards a shoulder). The **pitc
 however, is not observable: the rotation happens around an axis that passes almost through the two
 eyes, and the two points stay practically still.
 
-In this entry I describe how the driver I am writing for GNU/Linux, together with the AI assistant
-I mentioned, recovers the pitch from the **face** rather than from the eyes alone. I keep two things
-separate:
+In this entry I describe how I tackled the problem with a **prototype**, written with the help of
+the AI assistant I mentioned: a test program that recovers the pitch from the **face** rather than
+from the eyes alone. For now it works on the images of a **USB webcam**, not on those of the 4C.
+Bringing it to the sensor's infrared (IR) images is the next step.
 
-- what runs **in the driver**, on the 4C's infrared (IR) images;
-- what runs in an **example program** that uses an ordinary webcam as a test bench.
-
-The measurements on the 4C are few, taken with a single person, and I report them with their
-conditions.
+There are no accuracy measurements: there is a method, a screenshot and an honest list of doubts.
 
 ## The idea: a face has many more points than two eyes
 
@@ -33,8 +30,8 @@ sticks out forward, moves up or down relative to the eyes. That is exactly the m
 
 To find these points in the images I use **MediaPipe Face Landmarker**, a set of Google models for
 face analysis. The official bundle contains three: a face detector (BlazeFace), a face landmark
-model and a facial expression model ([Google AI Edge, n.d.](#references)). The driver uses **only
-one** of them, the `face_landmarks_detector` network.
+model and a facial expression model ([Google AI Edge, n.d.](#references)). The prototype uses
+**only one** of them, the `face_landmarks_detector` network.
 
 This network receives a square 256 × 256 pixel crop of the face and returns:
 
@@ -50,57 +47,52 @@ Google's work on estimating face geometry with a single camera
 ([Kartynnik et al., 2019](#references), preprint).
 
 The network is released under the **Apache 2.0** licence ([Yan and Grishchenko, 2022](#references)).
-In the driver I use a conversion to the ONNX format made by a third party, which states that the
+In the prototype I use a conversion to the ONNX format made by a third party, which states that the
 weights were not modified ([senty-au, n.d.](#references)). The file is 4.9 MB, it is embedded in the
-program, and the driver checks its SHA-256 fingerprint at start-up. In the driver's repository the
-licence and the provenance are listed in a notices file for third-party components.
+program, and the program checks its SHA-256 fingerprint.
 
 ## An interpreter written from scratch
 
 To run a neural network one usually relies on a library such as TensorFlow or ONNX Runtime. In the
-driver I made a different choice: a small **interpreter written in Go** that reads the model file
+prototype I made a different choice: a small **interpreter written in Go** that reads the model file
 and can execute only the operations this network needs (convolutions, additions, activation
 functions, changes in the shape of the data).
 
-This is consistent with the goals of the previous entry: no proprietary components, few
+This is consistent with the goals I set in the previous entry: no proprietary components, few
 dependencies, memory prepared at start-up and reused. The interpreter uses the AVX2 and FMA vector
 instructions of recent processors when they are available; otherwise it falls back to plain Go code.
 
 One inference costs **113 million multiply-accumulate operations** (MACs), that is, operations of
-the kind "multiply two numbers and add the result to a running total". The driver's documentation
-reports 18–22 ms per inference on one core of a Ryzen 7 2700X.
+the kind "multiply two numbers and add the result to a running total".
 
 ## Finding the face and cropping it
 
 The network does not search for the face in the whole image. It expects a crop with the face in the
 centre, a margin around it and the line of the eyes horizontal; it tolerates only small errors in
 position and rotation ([Yan and Grishchenko, 2022](#references)). The real work, then, is preparing
-the right crop. The driver has three ways, in this order:
+the right crop. The prototype has two ways:
 
-1. **Tracking.** If the previous frame contained a face, the new crop is derived from its points:
-   centred on the face, 1.5 times larger, and **rotated** so that the line between the outer corners
-   of the eyes is horizontal. One inference is enough.
-2. **From the tracker's eyes.** On the 4C, if the camera is calibrated (see below), the driver
-   projects the two corneal centres into the image and builds the crop around them.
-3. **Grid search.** If nothing else is available, the driver tries crops of three sizes (60 %, 40 %
-   and 85 % of the short side of the image) on a grid with a step of half a side, from the centre
-   towards the edges. It stops at the first crop with a probability above 0.95, then refines the
-   result with tracking. It costs up to about thirty inferences.
+1. **Tracking.** If there was a face shortly before (within 1.5 seconds), the new crop is derived
+   from its points: centred on the face, 1.5 times larger, and **rotated** so that the line between
+   the outer corners of the eyes is horizontal. One inference is enough.
+2. **Grid search.** Otherwise the program tries crops of three sizes (60 %, 40 % and 85 % of the
+   short side of the image) on a grid with a step of half a side, from the centre towards the edges.
+   It stops at the first crop with a probability above 0.95, then refines the result with tracking.
+   It costs up to about thirty inferences.
 
 The bundle's BlazeFace detector is not used: to find the face, the probability returned by the
-landmark network itself is enough. To avoid wasting computation, on the 4C the grid search never
-starts when the tracker says nobody is in front of it, and if it keeps failing it is repeated less
-and less often, down to once every 5 seconds.
+landmark network itself is enough. To avoid wasting computation, if the grid search finds nothing it
+is repeated less and less often, down to once every 2 seconds.
 
-Before passing the crop to the network, the driver **normalises the contrast**: it stretches the
-grey levels between the 1st and the 99th percentile of the crop. The reason is written in the code:
-the 4C's IR images are dark and change with automatic exposure, whereas the model was trained on
+Before passing the crop to the network, the program **normalises the contrast**: it stretches the
+grey levels between the 1st and the 99th percentile of the crop. This choice is designed for IR
+images, which are dark and change with automatic exposure, whereas the model was trained on
 well-exposed colour photos. The image is black and white, so the same grey value is copied into the
 three colour channels the network expects.
 
 ## From points to angles: fitting a mask onto the face
 
-Once the points are found, we need to work out how the head is oriented. Here the driver follows
+Once the points are found, we need to work out how the head is oriented. Here the prototype follows
 the same path as MediaPipe's `face_geometry` module ([The MediaPipe Authors, 2020](#references)).
 
 The idea is easy to picture. Imagine a **rigid mask**, an average face in 3D, that you have to lay
@@ -108,12 +100,12 @@ onto the face seen by the camera, rotating, moving and scaling it until its poin
 found by the network as closely as possible. The rotation needed to make it fit is the rotation of
 the head.
 
-The mask is MediaPipe's **canonical face model**. The driver uses 33 of its points, the most rigid
-ones; the code describes them as points of the nose, cheekbones, eye corners and forehead. Each has
-a weight, also taken from MediaPipe (Apache 2.0).
+The mask is MediaPipe's **canonical face model**. The prototype uses 33 of its points, the most rigid
+ones: points of the nose, cheekbones, eye corners and forehead. Each has a weight, also taken from
+MediaPipe (Apache 2.0).
 
 The method for finding the rotation that best overlays two sets of points is called **Procrustes
-analysis**. The driver uses Horn's closed-form solution based on quaternions
+analysis**. The prototype uses Horn's closed-form solution based on quaternions
 ([Horn, 1987](#references)). The computation proceeds in three steps:
 
 1. **Scale.** A first comparison between the mask, in millimetres, and the points, in pixels, tells
@@ -123,7 +115,7 @@ analysis**. The driver uses Horn's closed-form solution based on quaternions
 2. **Points in 3D.** Each point is placed back in space along the camera ray that passes through it,
    at that distance plus its relative depth.
 3. **Rotation.** A second Procrustes fit, now between 3D points in millimetres, gives the rotation.
-   If the resulting scale is not 1, the distance used was wrong: the driver corrects it and repeats
+   If the resulting scale is not 1, the distance used was wrong: the program corrects it and repeats
    steps 2 and 3, three times in total.
 
 Note that this is **not** the classic PnP (*Perspective-n-Point*) method, which looks for the pose
@@ -134,104 +126,26 @@ The final rotation is decomposed into three angles, in the order yaw, pitch, rol
 the elevation of the direction the face is pointing: positive upwards. The names of the angles are
 those of the previous entry ([Murphy-Chutorian and Trivedi, 2009](#references)).
 
-## On the 4C: from infrared images to the screen
-
-Among its other streams, the 4C sends the full image from its IR camera: 640 × 480 pixels, 8 bits
-per pixel in greyscale, 30 images per second. On these images the driver does everything described
-above. Two steps remain, though.
-
-**Calibrating the camera.** To go from pixels to millimetres one needs to know the camera: focal
-length, optical centre, position and orientation relative to the tracker. The firmware does not
-expose them. The driver estimates them on its own, in a way I like very much: it compares the
-**centre of each iris** found by the network with the **3D corneal centre** provided by the
-tracker. The same two points that on their own were not enough for the pitch are used to measure
-the camera.
-
-Technically it is a least-squares problem, solved with the Levenberg–Marquardt method and with
-weights that limit the effect of outlier samples. The driver also tries the hypothesis that the
-image is mirrored. It accepts the calibration only if the reprojection error is below 4 pixels and
-the uncertainty of the rotation is below 1°. To collect useful data one has to move the head:
-forwards and backwards, sideways and up and down. A guided application asks for this step by step.
-The calibration concerns the device, not the person: doing it once per 4C is enough. Until the
-camera is calibrated, the driver marks the pitch as invalid.
-
-**Bringing the angles into the screen's coordinate system.** With the camera calibrated, the
-rotation goes from the camera to the tracker and then to the screen, using the screen geometry
-stored in the 4C. The pitch then goes through a **1€ filter**, a low-pass filter that removes jitter
-when the head is still and reduces lag during fast movements ([Casiez et al., 2012](#references)).
-Finally, the driver subtracts a **personal zero**: the pitch measured while the person holds the
-head straight and looks at the centre of the screen.
-
-The value is written into the gaze samples close in time, within 150 ms of the image. The IR images
-carry a timestamp that lags by about 25 ms behind the gaze samples that see the same eyes, and the
-driver compensates for this.
-
-## What I have measured on the 4C so far
-
-These are the data reported in the driver's documentation for the tests of **4 November 2026**:
-**a single 4C** and **a single person**.
-
-| What | Result |
-| --- | --- |
-| Face found in the IR images | 100 % of the images, about 27 processed per second |
-| Camera calibration adopted | reprojection error 2.8–3.2 px, rotation uncertainty 0.3–0.7° |
-| Pitch with the chin raised | +11° |
-| Pitch with the chin lowered | −21° |
-
-The two rows on the pitch say that **the direction is right**: chin up gives a positive angle, chin
-down a negative one. **They do not say how accurate it is.** I had no reference, for example an
-inclinometer, to know by how many degrees I had actually tilted my head. And I cannot compare it
-with Tobii's original software, which does not exist on GNU/Linux.
-
-The documentation also reports automated tests on **synthetic** data: a virtual head in known poses,
-projected with a known camera, gives an error below 0.11°; the complete estimator, with a fake face
-model, has a maximum pitch error of 0.27°. These numbers say that the geometric computations are
-correct. They say nothing about the network's precision on a real face.
-
-### A side effect: yaw improves too
-
-The same tests revealed a problem I did not expect. Derived from the line between the eyes, on the
-4C the yaw is **underestimated by a factor of about five**, and part of the missing rotation ends up
-in the roll. One explanation given in the documentation: the 4C has a single camera, below the
-screen, and it measures the position of the eyes in the image plane well, but which of the two is
-closer poorly. This is the table, again with one person:
-
-| Movement | From the face: yaw / roll | From the eyes: yaw / roll |
-| --- | --- | --- |
-| head straight | +5° / −1° | 0° / 0° |
-| turned left | +42° / −8° | +3° to +7° / +10° |
-| turned right | −31° / +2° | −8° to −10° / −9° |
-| tilted right | −5° / −28° | −6° / −28° |
-
-For pure tilt the two methods agree. For rotations they do not. For this reason, when the face is
-tracked, the driver takes yaw and roll from the face as well, and falls back to the eyes when there
-is no face. With the head turned, the face stayed tracked in all images, whereas beyond about 25°
-the tracker lost the eyes.
-
-According to the documentation, the +5° offset with the head straight depends on the camera
-calibration, and applications can remove it with their own neutral point.
-
 ## The test bench: the webcam
 
-To develop and check the face model without always having the 4C connected, the driver includes an
-example program, **"Face from the webcam"**. The code describes it as the face preview of the
-driver's telemetry, but on the images of a webcam instead of the 4C's IR sensor. It uses **the same
-model**, **the same interpreter** and **the same logic** for tracking and grid search. The webcam is
-read directly through Linux's video subsystem (V4L2), without C libraries.
+The prototype is called **"Face from the webcam"**. It reads the images directly through Linux's
+video subsystem (V4L2), without C libraries, and shows full screen the image with the face points
+and all the current measurements.
 
 For the tests I used a **high-resolution USB webcam**, read here at 640 × 480: the screenshot below
 **does not come from the Tobii 4C**.
 
-The image is **black and white**: the program takes only the luminance, as it comes from the webcam.
-The driver's detector works on single-channel images, like the 4C's IR images.
+The image is **black and white**: the program takes only the luminance, as it comes from the webcam,
+and works on single-channel images. This is deliberate, to get closer to the sensor's IR images,
+which are also greyscale.
 
 There is an important difference. The webcam is **not calibrated**: the angles are computed relative
 to the webcam's axis, with a focal length **assumed** from the horizontal field of view, 60° by
-default. For an image 640 pixels wide the focal length is 320 / tan(30°) ≈ 554 pixels. The code
-states it clearly: without calibration the focal length is an assumption; the angles depend on it
-only slightly, the distances proportionally.
+default. For an image 640 pixels wide the focal length is 320 / tan(30°) ≈ 554 pixels. Without
+calibration the focal length is an assumption: the angles depend on it only slightly, the distances
+proportionally.
 
-The program also computes some measures that **are not in the driver**:
+The program also computes a few additional measures:
 
 - **distance from the iris.** The horizontal diameter of the iris is nearly the same across a wide
   population, 11.7 ± 0.5 mm ([Vakunov and Lagun, 2020](#references)). Knowing its diameter in pixels
@@ -243,8 +157,8 @@ The program also computes some measures that **are not in the driver**:
   70 % of its typical value over the last 5 seconds, and open again above 80 %. A closure counts as a
   blink if it lasts at most 700 ms. Soukupová and Čech instead use a classifier over a window of
   frames: the program's adaptive threshold is a simpler choice;
-- **MAR** (*mouth aspect ratio*), defined in the code as the inner opening of the lips divided by the
-  inner width of the mouth.
+- **MAR** (*mouth aspect ratio*), defined in the program as the inner opening of the lips divided by
+  the inner width of the mouth.
 
 ![The full-screen "Face from the webcam" interface. On the left, the black-and-white image of the USB webcam, not of the Tobii 4C, with a person sitting in front of it: on the face, the green mesh of the 478 points, the two irises marked in blue and orange, and the orange, slightly rotated box of the crop passed to the model. Below, three plots of the last 10 seconds: head rotation, eye opening and model time per frame. On the right, the Head, Eyes, Mouth and face, Face model, Webcam, Image, Controls and Process panels with the current values.](/assets/img/kite/viso-dalla-webcam-face-landmarker.png)
 
@@ -269,21 +183,34 @@ computed over the last 120 frames, and these include grid searches, which are mu
 normal inference (the maximum is 358.4 ms). A few very high values shift the mean but not the
 percentile.
 
-**The webcam runs at 16.7 frames per second instead of 30.** The example's documentation reports
-that in a dimly lit room this webcam drops by itself to about 17 frames per second, because of
-automatic exposure.
+**The webcam runs at 16.7 frames per second instead of 30.** I have seen that in a dimly lit room
+this webcam drops by itself to about 17 frames per second, because of automatic exposure.
+
+### The same interface in motion
+
+A still screenshot cannot show the most important thing: pitch changing as the head moves. In the
+video, about 19 seconds of the same interface, a person nods, turns the head right and left, opens
+the mouth and closes the eyes. In the **Head** panel and in the rotation plot at the bottom left you
+can see pitch rise and fall with the "yes", separate from the yaw of the "no". Here too the numbers
+are those of the moment, not accuracy measurements.
+
+<video controls muted playsinline preload="metadata" poster="/assets/img/kite/viso-dalla-webcam-anteprima.jpg" aria-label="About 19 seconds of the &quot;Face from the webcam&quot; interface: a person in front of the USB webcam nods, turns the head, opens the mouth and closes the eyes; the green mesh of the 478 points follows the face and the pitch, yaw and roll values change in the Head panel and in the plots.">
+  <source src="/assets/img/kite/viso-dalla-webcam-anteprima.mp4" type="video/mp4">
+  Your browser cannot play the video: you can
+  <a href="/assets/img/kite/viso-dalla-webcam-anteprima.mp4">download it here</a> (MP4, 2.4 MB).
+</video>
 
 ### Two distances that do not add up
 
 The most striking difference is between the two distances: **690 mm** from the canonical model and
-**486 mm** from the iris. The code explains part of the difference, not all of it.
+**486 mm** from the iris. The way they are computed explains part of the difference, not all of it.
 
 - **They do not measure the same point.** The "model" distance is that of the canonical model's
   origin, which lies behind the root of the nose. In the canonical model the eye corners are about
   3–4 cm in front of that origin. A few centimetres of difference are therefore expected.
 - **They use two different rulers.** The model distance assumes that the face has the size of
-  MediaPipe's average face: the code notes that if the face is larger or smaller, only the estimated
-  distance changes. The iris distance assumes an 11.7 mm iris.
+  MediaPipe's average face: if the face is larger or smaller, only the estimated distance changes,
+  not the angles. The iris distance assumes an 11.7 mm iris.
 - **The focal length alone cannot explain it.** Given how the formulas are written, both distances
   grow in proportion to the assumed focal length, so an error in the focal length would change both
   by the same ratio.
@@ -291,59 +218,75 @@ The most striking difference is between the two distances: **690 mm** from the c
 About 16–17 cm remain that I cannot explain. Nor do I know which of the two is closer to the truth:
 at that moment I did not measure the real distance. It is an **open question**.
 
+## The next step: bringing it to the 4C
+
+In the previous entry I wrote that the next step would be writing a free driver for GNU/Linux. The
+webcam prototype is meant to prepare that work: when the 4C gives me its infrared images, the method
+will have to work there too. Some things, however, are not present on the webcam and will have to be
+added.
+
+- **The 4C's camera will have to be calibrated.** On the webcam the focal length is an assumption.
+  To get reliable angles and distances on the sensor, its camera will need to be actually known.
+- **The angles will have to be referred to the screen.** On the webcam they are relative to the
+  camera's axis. For Kite, what matters is how the head is turned relative to the screen.
+- **The pitch will have to be filtered.** I plan to use a **1 € filter** (*one euro filter*), which
+  smooths out the small fluctuations in the measurement ([Casiez et al., 2012](#references)). The
+  name is the authors' pun: the filter is so simple and cheap to compute that it "costs" one euro; it
+  has nothing to do with money. The filter adapts its strength to the speed of the head: when the
+  head is still it smooths a lot and removes the jitter, when the head moves quickly it smooths
+  little, so the value does not lag behind the movement. For now, the webcam prototype shows the
+  values without filtering.
+
 ## The open problem: a model for colour photos on infrared images
 
 In the previous entry I wrote that I did not know whether a model trained on colour images would
-work on the 4C's IR images. The model card confirms the concern: the network is optimised for videos
-captured with the front camera of smartphones, and the training data were collected with smartphone
-cameras ([Yan and Grishchenko, 2022](#references)). The 4C's images are infrared, dark, and taken
-from close up and from below.
+work on the 4C's IR images. The doubt remains. The model card reinforces it: the network is
+optimised for videos captured with the front camera of smartphones, and the training data were
+collected with smartphone cameras ([Yan and Grishchenko, 2022](#references)). The 4C's images are
+infrared, dark, and taken from close up and from below.
 
 Here is what I can say, honestly:
 
-- **What I did**: I normalise the contrast of each crop and copy the grey value into the three
-  channels. I did not retrain the network.
-- **What I observed**: in the tests of 4 November, with one person, the face was found in 100 % of
-  the IR images and the pitch changed sign in the right direction.
-- **What I do not know**: whether the precision of the points on IR images is the same as on colour
-  photos; how it behaves with other people, with glasses, with other skin tones, at different
+- **What I did**: the prototype works in greyscale, normalises the contrast of each crop and copies
+  the grey value into the three channels. I did not retrain the network.
+- **What I observed**: on the webcam, in black and white, the network finds the face. In the
+  screenshot the model panel reports the face found in 100 % of the frames and the tracking mode,
+  that is, the face followed from one frame to the next without new searches.
+- **What I do not know**: whether the network will work on the 4C's IR images, and with what
+  precision; how it behaves with other people, with glasses, with other skin tones, at different
   distances or with different room lighting. I have no measurements on this.
-
-There is also a limitation that depends on the device. When the 4C loses the eyes, it dims the
-infrared illuminators: the face is no longer visible and the pitch is not available.
 
 ## Open problems
 
-- **Pitch accuracy.** I have the direction, not the error in degrees. A comparison with an
-  independent reference is needed.
-- **A single person.** Everything I know about the 4C comes from tests with one face.
+- **Pitch accuracy.** I have not measured it yet. A comparison with an independent reference is
+  needed.
+- **A single person.** The tests so far have been done with one face.
 - **The two distances** from the webcam, 690 mm versus 486 mm, still without a full explanation.
-- **The cost.** According to the driver's documentation, about two thirds of one core at 30
-  inferences per second. The number of inferences per second can be reduced, but I need to find out
-  how much the pitch suffers.
-- **Eye opening.** According to the driver's documentation, the 4C firmware always sends the eyelid
-  opening as −1, so the device does not provide it. The EAR computed from the face points could
-  replace it, but for now it exists only in the webcam example and has not been tried on IR images.
+- **The cost.** At the instant of the screenshot the program uses 38 % of one core. I will need to
+  find out how much it will cost on the computer that runs Kite, and how many inferences per second
+  are really needed.
+- **Eye opening.** In the previous entry I wondered whether the 4C provides it directly. The EAR
+  computed from the face points could be an alternative, but so far I have only seen it on the
+  webcam.
 
 ## Next steps
 
 1. Measure the pitch against a reference, for example at known head tilts.
 2. Measure the real distance in front of the webcam, to find out which of the two estimates is wrong
    and why.
-3. Try the face model with other people, with their informed consent.
-4. Assess whether the EAR on the 4C's IR images is reliable enough for a voluntary blink used as a
-   click in Kite.
-
-The code is in my `tobii4c-linux` driver, which is not public for now.
+3. Try the prototype with other people, with their informed consent.
+4. Bring the method to the 4C's IR images, together with the free driver, and check whether the
+   network works on those images.
+5. Assess whether the EAR is reliable enough for a voluntary blink used as a click in Kite.
 
 > **Warning.** Kite is an experimental project and **is not a certified medical device**. The head
 > pose estimation described here does not yet have a measured accuracy, and Google's model card
-> states that the network is not intended for human life-critical decisions. An unofficial driver
-> uses the tracker in ways not foreseen by the manufacturer: sending commands whose effect is unknown
-> could change its behaviour, including that of the infrared illuminators. Anyone who depends on an
-> AAC tool to communicate should always have a backup alternative. Tests with people require informed
-> consent and, when needed, the approval of an ethics committee; images of the face are personal
-> data.
+> states that the network is not intended for human life-critical decisions. When I work on the 4C
+> with an unofficial driver, I will be using the tracker in ways not foreseen by the manufacturer:
+> sending commands whose effect is unknown could change its behaviour, including that of the infrared
+> illuminators. Anyone who depends on an AAC tool to communicate should always have a backup
+> alternative. Tests with people require informed consent and, when needed, the approval of an ethics
+> committee; images of the face are personal data.
 
 ## References
 

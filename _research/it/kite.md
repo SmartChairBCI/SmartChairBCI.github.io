@@ -11,8 +11,10 @@ icon: kite
 status: review           # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ data di avvio della ricerca
 next_steps:
-  - text: Stimare il beccheggio della testa dalle immagini IR del 4C
+  - text: Stimare il beccheggio della testa dal viso, in prova con una webcam
     done: true
+  - text: Portare la stima del beccheggio sulle immagini IR del 4C
+    done: false
   - text: Misurare l'accuratezza del beccheggio contro un riferimento
     done: false
   - text: Provare il modello del viso con altre persone

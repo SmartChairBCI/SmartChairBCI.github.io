@@ -11,8 +11,10 @@ icon: kite
 status: review           # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ research start date
 next_steps:
-  - text: Estimate head pitch from the 4C's IR images
+  - text: Estimate head pitch from the face, tested with a webcam
     done: true
+  - text: Bring the pitch estimate to the 4C's IR images
+    done: false
   - text: Measure pitch accuracy against a reference
     done: false
   - text: Try the face model with other people
