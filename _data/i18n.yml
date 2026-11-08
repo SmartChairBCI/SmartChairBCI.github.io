@@ -86,8 +86,7 @@ it:
   months: [gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre]
   months_short: [gen, feb, mar, apr, mag, giu, lug, ago, set, ott, nov, dic]
   contact:
-    email_title: Scrivimi
-    email_text: Il modo più diretto per parlare con me.
+    cta: Scrivimi
     form_title: Componi il messaggio
     form_text: Compila i campi e si aprirà il tuo programma di posta con il messaggio pronto da inviare.
     name: Nome
@@ -186,8 +185,7 @@ en:
   months: [January, February, March, April, May, June, July, August, September, October, November, December]
   months_short: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
   contact:
-    email_title: Write to me
-    email_text: The most direct way to reach me.
+    cta: Write to me
     form_title: Compose your message
     form_text: Fill in the fields and your email app will open with the message ready to send.
     name: Name

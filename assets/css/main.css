@@ -428,7 +428,6 @@ main { display: block; outline: none; }
 .contact-side { display: grid; gap: 1.5rem; align-content: start; }
 .contact-card:hover { transform: none; }
 .contact-card .card-title { margin-top: 0; font-size: 1.3rem; }
-.contact-email { font-family: var(--font-display); font-size: clamp(1.1rem, 2.4vw, 1.4rem); font-weight: 600; overflow-wrap: anywhere; }
 .contact-card--dark { background: linear-gradient(150deg, var(--navy-700), var(--navy)); border-color: var(--navy-700); color: var(--metal-200); }
 .contact-card--dark .card-title { color: var(--white); }
 .contact-card--dark .card-text { color: var(--metal-300); }
