@@ -246,7 +246,7 @@ Il programma che rimette insieme i messaggi lavora così:
 Il limite di 1 MiB è una soglia di buon senso. Un'immagine IR del 4C occupa poco più di 300 KB,
 quindi un messaggio che dichiara molto di più è quasi certamente un errore di allineamento.
 
-### Le risposte a pezzi
+### Le risposte a puntate
 
 Alcune risposte sono troppo grandi per un solo trasferimento. Nelle catture dell'ET5 il blocco di
 calibrazione supera i 650 KB ([Krazubu, s.d.](#riferimenti)). Il dispositivo allora manda:

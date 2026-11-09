@@ -244,7 +244,7 @@ The program that puts messages back together works like this:
 The 1 MiB limit is a common-sense threshold. An IR image from the 4C takes a little over 300 KB, so
 a message that declares much more is almost certainly an alignment error.
 
-### Chunked responses
+### Instalment responses
 
 Some responses are too large for a single transfer. In the ET5 captures the calibration block
 exceeds 650 KB ([Krazubu, n.d.](#references)). The device then sends:
