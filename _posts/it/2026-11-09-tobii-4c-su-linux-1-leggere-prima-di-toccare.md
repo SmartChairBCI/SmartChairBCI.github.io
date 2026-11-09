@@ -142,7 +142,7 @@ Leggere più fonti insieme ha un vantaggio inatteso: si vede dove non sono d'acc
 - Il comando 3170 è *get_enabled_eye*, cioè "quali occhi sono abilitati", per Tropaion, e *state* per
   Krazubu.
 
-La lezione che ne traggo: **anche i nomi sono ipotesi**. Due progetti seri possono vedere gli stessi
+La lezione che ne traggo: **anche i nomi sono ipotesi**. Due progetti possono vedere gli stessi
 byte e dar loro nomi diversi.
 
 ## Prima ricognizione: guardare senza parlare

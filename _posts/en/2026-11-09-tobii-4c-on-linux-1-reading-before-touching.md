@@ -139,7 +139,7 @@ Reading several sources together has an unexpected advantage: you can see where 
 - Command 3170 is *get_enabled_eye*, that is, "which eyes are enabled", for Tropaion, and *state* for
   Krazubu.
 
-The lesson I draw: **names are hypotheses too**. Two serious projects can look at the same bytes and
+The lesson I draw: **names are hypotheses too**. Two projects can look at the same bytes and
 give them different names.
 
 ## First reconnaissance: looking without talking
