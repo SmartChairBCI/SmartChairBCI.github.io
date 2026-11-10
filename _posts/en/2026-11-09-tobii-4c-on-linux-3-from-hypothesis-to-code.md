@@ -377,8 +377,7 @@ tests do not exercise ([The Go Authors, n.d.-a](#references)).
 
 ## How I work with AI on the code
 
-The division of tasks is the one I announced. The AI assistant proposes solutions and writes drafts of
-code, including drafts of tests. I review every line before it enters the project, I write or require a
+The division of tasks is the one I announced. I propose architectural solutions, the AI assistant proposes and writes draft code, including draft tests.I review every line before it enters the project, I write or require a
 test for every hypothesis about the data format, and I reject whatever does not match the captures.
 
 In practice I follow a few rules:
