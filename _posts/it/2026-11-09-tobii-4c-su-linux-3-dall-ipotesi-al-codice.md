@@ -380,7 +380,7 @@ che i test non percorrono ([The Go Authors, s.d.-a](#riferimenti)).
 
 ## Come lavoro con l'AI nella scrittura
 
-La divisione dei compiti è quella che avevo annunciato. Io propongo soluzioni architettura, l'assistente AI propone propone e scrive
+La divisione dei compiti è quella che avevo annunciato. Io propongo soluzioni architetturali, l'assistente AI propone propone e scrive
 bozze di codice, comprese bozze di test. Io rivedo ogni riga prima che entri nel progetto, scrivo o
 pretendo un test per ogni ipotesi sul formato dei dati, e rifiuto ciò che non torna con le catture.
 
