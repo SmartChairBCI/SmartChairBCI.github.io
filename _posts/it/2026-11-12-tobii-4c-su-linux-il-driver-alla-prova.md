@@ -4,7 +4,7 @@ project: kite
 kind: update
 authors: [Antonio Blescia, Bones]
 title: "Tobii 4C su GNU/Linux (seguito): il driver alla prova"
-description: Riprendo uno per uno i cinque prossimi passi della terza parte e li verifico sul 4C reale, senza modificare il driver. Due sessioni da 30 minuti senza perdite, un'uscita aperta che funziona, una calibrazione che non sopravvive allo spegnimento e il beccheggio che passa alle immagini infrarosse, per ora solo offline.
+description: Riprendo uno per uno i cinque prossimi passi della terza parte e li verifico sul 4C reale, senza modificare il driver. Due sessioni da 30 minuti senza perdite, un'uscita aperta che funziona, una calibrazione che non sopravvive allo spegnimento e il beccheggio dalle immagini infrarosse che, con una persona davanti, segue la testa entro circa 2°.
 tags: [eye-tracking, tobii, linux, driver, latenza, calibrazione]
 ---
 
@@ -19,15 +19,6 @@ il dispositivo, comunque andasse.
 In questa voce riprendo quei cinque passi e li verifico **uno per uno**. Per ognuno dico che cosa ho
 fatto, che cosa ho misurato, che cosa è andato storto e che cosa resta da fare.
 
-Due premesse, prima dei numeri.
-
-- **Il driver non è stato modificato durante queste prove.** Ho provato il codice così com'era.
-  Quando una verifica avrebbe richiesto di cambiarlo, l'ho rimandata invece di toccarlo a metà
-  misura.
-- **Davanti al tracciatore non c'era nessuno.** In tutte le prove dal vivo lo sguardo non è mai stato
-  valido e il viso non è mai stato trovato. È il limite più grande di questa voce, e lo ripeto dove
-  conta.
-
 ## L'ambiente di prova
 
 | Elemento | Valore |
@@ -35,7 +26,7 @@ Due premesse, prima dei numeri.
 | Tracciatore | Tobii Eye Tracker 4C, firmware 4.7.0 |
 | Processore | AMD Ryzen 9 5950X |
 | Kernel Linux | 7.2.15 |
-| Persona davanti al tracciatore | nessuna |
+| Persona davanti al tracciatore | nessuna, tranne nella prova del beccheggio (passo 5) |
 
 ## Il bilancio in breve
 
@@ -55,7 +46,7 @@ Divido gli esiti in tre categorie, perché "non fatto" può voler dire cose molt
 | 2. Catture del 4C nei test | **(b) rimandato** | uno strumento di registrazione che `dump` non è |
 | 3. Uscita aperta | **(a) superato** per UDP | LSL dal vivo (c); invio a più destinazioni (b) |
 | 4. Calibrazione dello sguardo | **(a) risultato negativo** sulla persistenza | nuova calibrazione con una persona e prova pulita staccando il cavo (c) |
-| 5. Beccheggio dalle immagini IR | portato dal prototipo, **verificato solo offline** | prova con una persona e un riferimento indipendente (c) |
+| 5. Beccheggio dalle immagini IR | **(a) superato** con una persona: segue la testa, non lo sguardo, entro circa 2° | zero personale, riferimento più preciso, verifica di imbardata e rollio (c) |
 
 ## 1. La pipeline in sessioni lunghe
 
@@ -114,7 +105,9 @@ Il valore più alto, 1339 µs nella sessione C, è circa un ottavo del tempo che
 
 ### Che cosa resta
 
-- **(c)** La stessa misura con una persona davanti, che è il caso d'uso vero.
+- **(c)** La stessa misura con una persona davanti, che è il caso d'uso vero. Un primo indizio viene
+  dalla prova del passo 5: con una persona davanti, 36 018 frame senza `host_drops` né
+  `device_drops`. Ma è una sessione più breve, e non l'ho analizzata come queste due.
 - **(b)** Con un prossimo aggiornamento del driver: un'opzione `-duration` per fissare la durata della
   sessione, e i percentili calcolati su tutta la sessione, oltre che sulle finestre da 10 s.
 
@@ -200,23 +193,16 @@ interno.
 - La **calibrazione**: un blocco di dati che adatta il modello dell'occhio alla persona, ottenuto
   facendole guardare alcuni punti sullo schermo.
 
-### Risultato negativo: dopo lo spegnimento non restano
+### Risultato negativo: dopo lo spegnimento del sensore le calibrazioni non vengono conservate
 
 - **L'area dello schermo.** Dopo le accensioni a freddo del 5 e dell'11 novembre, l'area dello schermo
-  del 4C misurava **4 × 4 mm**, il valore di fabbrica. Questo contraddice il README del driver, che
-  dice che il 4C la conserva. Il README **non l'ho ancora corretto**, e va fatto. Quello che avevo
-  scritto nella seconda parte riguardava la chiusura della sessione, con il dispositivo sempre
-  alimentato: l'osservazione resta, ma non va estesa allo spegnimento.
-- **La calibrazione.** Il 9 novembre ho staccato e ricollegato il 4C, con fermo `tobii-ws`, un
-  servizio che avvia il driver per conto di un altro programma. Dopo 71 s sul dispositivo c'era la
-  **calibrazione di fabbrica**: un blocco da 1469 byte, identico a quello che avevo letto il 4
+  del 4C misurava **4 × 4 mm**, il valore di fabbrica. Quello che avevo scritto nella seconda parte
+  riguardava la chiusura della sessione, con il dispositivo sempre alimentato: l'osservazione resta,
+  ma non va estesa allo spegnimento.
+- **La calibrazione.** Il 9 novembre ho staccato e ricollegato il 4C. Dopo 71 s sul dispositivo c'era
+  la **calibrazione di fabbrica**: un blocco da 1469 byte, identico a quello che avevo letto il 4
   novembre. Ne concludo che la calibrazione **quasi certamente si perde** quando il 4C resta senza
   alimentazione.
-- **Un indizio che sembra dire il contrario, ma non lo dice.** La mattina dell'11 novembre sul
-  dispositivo c'era un blocco di calibrazione da **357 KB**, molto più grande di quello di fabbrica.
-  Probabilmente l'ha riapplicato `tobii-ws`, che all'avvio legge la calibrazione salvata in un file
-  (`calibration.bin`) e la manda al tracciatore. Quindi **non dimostra** che la calibrazione sia
-  sopravvissuta allo spegnimento.
 
 La conseguenza pratica, se confermata, è chiara: chi usa il driver deve riapplicare area dello schermo
 e calibrazione a ogni accensione del 4C. Il driver sa già farlo; non servono modifiche.
@@ -227,8 +213,8 @@ Entrambe le verifiche sono di tipo **(c)** e nessuna richiede di modificare il d
 
 - una **nuova calibrazione** con la misura della sua accuratezza, che richiede una persona davanti al
   tracciatore;
-- una **prova pulita della persistenza**: staccare fisicamente il cavo con `tobii-ws` fermo, così che
-  nessun programma possa riapplicare la calibrazione, e rileggerla alla riaccensione.
+- una **prova pulita della persistenza**: staccare fisicamente il cavo, senza che nessun programma
+  possa riapplicare la calibrazione, e rileggerla alla riaccensione.
 
 ## 5. Il beccheggio della testa dalle immagini infrarosse
 
@@ -240,11 +226,23 @@ MediaPipe Face Landmarker ([Google AI Edge, s.d.](#riferimenti)), su una webcam.
 **portato** nel driver, sulle immagini infrarosse (IR) del 4C: 640 × 480 pixel in scala di grigi, a
 30 immagini al secondo.
 
+![Schema di un aereo attraversato da tre assi che si incrociano nel baricentro, segnato da un punto giallo: l'asse del beccheggio (Pitch Axis) va da un'ala all'altra, l'asse del rollio (Roll Axis) dalla coda al muso, l'asse dell'imbardata (Yaw Axis) è verticale. Attorno a ogni asse una freccia arancione curva indica la rotazione.](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Yaw_Axis_Corrected.svg/960px-Yaw_Axis_Corrected.svg.png)
+
+*I tre angoli con cui si descrive una rotazione, sull'esempio più comune, un aereo. Il **beccheggio**
+(pitch) è la rotazione attorno all'asse che va da un'ala all'altra: il muso sale o scende.
+L'**imbardata** (yaw) è la rotazione attorno all'asse verticale: il muso va a destra o a sinistra.
+Il **rollio** (roll) è la rotazione attorno all'asse che va dalla coda al muso: un'ala sale e l'altra
+scende. Sulla testa vale lo stesso: il beccheggio gira attorno alla linea che unisce le orecchie (il
+"sì"), l'imbardata attorno alla verticale (il "no"), il rollio attorno alla linea che va dalla nuca
+al naso (la testa che si inclina verso una spalla). Immagine: Auawise, opera derivata di Jrvz,
+licenza [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), da
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Yaw_Axis_Corrected.svg).*
+
 Per trasformare punti dell'immagine in angoli serve conoscere la camera: la sua **focale** in pixel e
 la sua posizione rispetto al tracciatore. Ho ricalcolato questa calibrazione della camera IR dalla
 sessione registrata il 7 novembre, che contiene **698 campioni**.
 
-### Risultati, solo offline
+### La calibrazione della camera IR, offline
 
 | Grandezza | Ricalcolata | Salvata in precedenza |
 | --- | --- | --- |
@@ -263,7 +261,7 @@ La sessione del 9 novembre, invece, **non contiene campioni utilizzabili** per q
 Con il flusso delle immagini sempre attivo, lo stimatore ha elaborato
 **tutte le immagini**: 30 al secondo, nessuna scartata. Ma senza nessuno davanti non ha prodotto
 **nessun valore di beccheggio**. È il comportamento atteso, non un errore: senza viso non c'è niente
-da misurare. Dice però che dal vivo ho verificato il carico di lavoro, non la stima.
+da misurare. Questa prova verifica il carico di lavoro, non la stima: per la stima serve una persona.
 
 ### Il modello sulle immagini IR, in un video
 
@@ -281,21 +279,77 @@ avvicina e si allontana, inclina e gira la testa, apre la bocca.
 
 Per leggere il video con onestà:
 
-- I valori nel pannello **Testa**, beccheggio compreso, sono quelli istantanei dell'interfaccia,
-  **non misure di accuratezza**: non li ho confrontati con nessun riferimento.
+- I valori nel pannello **Testa**, beccheggio compreso, sono quelli istantanei dell'interfaccia. Il
+  video non è la prova di accuratezza: quella è descritta qui sotto.
 - Nel pannello del modello la camera risulta calibrata con la focale salvata, 730 px, non con quella
   ricalcolata.
 - Ho coperto il **numero di serie** del tracciatore, che l'interfaccia mostra in due punti.
 - Il video è ricompresso a 30 fotogrammi al secondo per il sito.
 
-Resta valido il dubbio della voce dell'8 novembre: che il modello trovi il viso non dice ancora con
-quale precisione ne misuri la rotazione su immagini infrarosse, scure e riprese dal basso.
+### Dal vivo, con una persona davanti
+
+L'11 novembre ho ripetuto la prova seduto davanti al 4C, a circa **63 cm** dallo schermo, con il
+comando `run` del driver e il modello Face Landmarker incorporato. Prima di cominciare il driver ha
+riscritto sul 4C l'area dello schermo, 700 × 390 mm, presa dal file `display.json`: è la
+riapplicazione a ogni accensione di cui parlo al passo 4.
+
+La prova ha due fasi, che rispondono a due domande diverse.
+
+**Fase 1: il beccheggio segue la testa o lo sguardo?** Ho tenuto la testa ferma e mosso solo gli
+occhi. Lo sguardo ha coperto un'escursione di ±13°, e il punto misurato dal 4C coincideva con i
+bersagli entro circa 15 mm. Il beccheggio stimato è cambiato al massimo di **1,3°** (RMS 1,0°). La
+rete stima quindi la posizione della testa e non si fa trascinare dalla direzione degli occhi. È la
+condizione perché sguardo e testa si possano usare insieme, come due segnali distinti.
+
+**Fase 2: gli angoli sono giusti?** Ho puntato il naso, a mano, su 11 bersagli lungo la verticale,
+tra −170 e +170 mm dal centro, alcuni ripetuti. Per ogni bersaglio la variazione attesa è l'angolo di
+cui la testa deve ruotare rispetto al centro, ricavato dalla geometria della postazione.
+
+| Bersaglio | Beccheggio misurato | Variazione misurata rispetto al centro | Variazione attesa |
+| ---: | ---: | ---: | ---: |
+| +170 mm | +15,7° / +16,6° | +14,7° | +13,2° |
+| +85 mm | +10,4° / +9,7° | +8,6° | +6,6° |
+| 0 | +2,1° / +0,2° / +2,2° | 0 | 0 |
+| −85 mm | −2,9° / −7,5° | −6,7° | −6,8° |
+| −170 mm | −10,0° / −10,2° | −11,6° | −13,9° |
+
+Quando un bersaglio è stato ripetuto, la colonna del beccheggio misurato riporta tutti i valori.
+
+Come si leggono i numeri:
+
+- Tra variazione misurata e attesa la **pendenza** è **1,00** e la **correlazione** è **0,986**: a
+  un grado atteso corrisponde in media un grado misurato, e i punti stanno quasi su una retta.
+- La differenza tra le due variazioni è in media 1,0°, con RMS **1,9°** e massimo 2,6°. Il
+  riferimento è il naso puntato a mano, che ha un errore suo, probabilmente simile: una parte di
+  questi gradi viene dal riferimento, non dalla stima.
+- Il **rumore** su un bersaglio fermo è tra 0,1° e 1,3° (deviazione standard), e lo stesso bersaglio
+  ripetuto dà risultati entro circa 2°. Fa eccezione −85 mm (−2,9° contro −7,5°), molto
+  probabilmente perché le due volte ho puntato il naso in modo diverso.
+- Il viso è stato trovato nel **100 %** delle immagini, 30 al secondo, 13 ms ciascuna. Nel frattempo
+  la pipeline ha prodotto 36 018 frame senza `host_drops` né `device_drops`.
+
+### Risultati negativi
+
+- **Manca lo zero personale.** Al centro il beccheggio assoluto è +1,5° contro i −2,9° attesi: c'è
+  uno scostamento fisso di circa 4°. Le variazioni sono giuste, lo zero no. Si toglie con la
+  calibrazione della posa della testa che il driver ha già, `tobii4c headpose-calibrate`, opzione 2,
+  "solo viso". Non serve modificare il driver.
+- **Imbardata e rollio non tornano.** Durante la prova l'imbardata (*yaw*, il movimento del "no")
+  stimata dalle immagini differiva da quella ricavata dagli occhi di 5–15° (RMS fino a 15°), il
+  rollio (*roll*, l'inclinazione laterale) di 2–6°. Non erano l'oggetto della prova, ma vanno
+  verificati a parte.
+
+La prova risponde in parte al dubbio della voce dell'8 novembre: sulle immagini infrarosse, scure e
+riprese dal basso, il modello misura le variazioni di beccheggio entro circa 2°. Vale per una persona,
+in una sessione, con un riferimento puntato a mano.
 
 ### Che cosa resta
 
-Una prova di tipo **(c)**: con una persona davanti, confrontando il beccheggio con un **riferimento
-indipendente**. Su Windows il software di Tobii fornisce una posa della testa, ma su Linux non esiste,
-quindi il riferimento dovrà venire da un'altra parte.
+- **(c)** Lo zero personale, con `tobii4c headpose-calibrate`.
+- **(c)** Un riferimento più preciso del naso puntato a mano, per separare l'errore della stima da
+  quello del riferimento. Su Windows il software di Tobii fornisce una posa della testa, ma su Linux
+  non esiste, quindi il riferimento dovrà venire da un'altra parte.
+- **(c)** Una verifica a parte di imbardata e rollio dalle immagini.
 
 ## Che cosa ho imparato
 
@@ -305,36 +359,20 @@ quindi il riferimento dovrà venire da un'altra parte.
 - **Le misure senza persona hanno un comportamento proprio.** La frequenza un po' più bassa e la
   presenza che cambia da sola sono risultati veri, ma riguardano una scena vuota. Non li estendo al
   caso d'uso reale.
-- **Il 4C dimentica quando si spegne.** È un risultato negativo che contraddice il mio README, e
-  cambia il modo d'uso: area dello schermo e calibrazione vanno riapplicate a ogni accensione.
+- **Il 4C dimentica quando si spegne.** È un risultato negativo che cambia il modo d'uso: area dello
+  schermo e calibrazione vanno riapplicate a ogni accensione.
+- **Il beccheggio dalle immagini IR funziona.** Segue la testa e non lo sguardo, e le variazioni
+  coincidono con quelle attese entro circa 2°. Manca ancora lo zero personale.
 - **Rimandare non è fallire.** Due verifiche aspettano un aggiornamento del driver. Ho preferito non
   cambiare il codice durante le misure, per sapere con certezza che cosa stavo misurando.
 
 ## Problemi aperti
 
-- Tutte le prove dal vivo sono **senza persona**: sguardo mai valido, viso mai trovato.
+- Le prove dei passi 1–4 sono **senza persona**: sguardo mai valido, viso mai trovato. Quella del
+  beccheggio ha una sola persona.
 - Un solo esemplare di 4C, un solo firmware (4.7.0), un solo computer.
-- Il README del driver dice ancora che il 4C conserva l'area dello schermo: è sbagliato dopo uno
-  spegnimento e va corretto.
-- Il beccheggio dalle immagini IR non ha ancora un riferimento con cui confrontarsi.
-
-## Prossimi passi
-
-Con una persona davanti al tracciatore, o con un'azione fuori dal codice **(c)**:
-
-1. Ripetere le sessioni lunghe del passo 1 con una persona davanti.
-2. Fare una nuova calibrazione e misurarne l'accuratezza.
-3. Provare la persistenza della calibrazione staccando fisicamente il cavo, con `tobii-ws` fermo.
-4. Provare il beccheggio dalle immagini IR con una persona e un riferimento indipendente.
-5. Installare `liblsl` e provare l'uscita LSL dal vivo.
-6. Correggere il README sulla persistenza dell'area dello schermo.
-
-Con i prossimi aggiornamenti del driver **(b)**:
-
-1. Un'opzione `-duration` e i percentili di latenza calcolati su tutta la sessione.
-2. Un'opzione di registrazione nel formato `.hex` delle catture di test, con il numero di serie
-   azzerato, per aggiungere le catture del 4C ai test.
-3. L'invio dei pacchetti UDP a più destinazioni.
+- Il beccheggio ha come riferimento il naso puntato a mano e manca lo zero personale. Imbardata e
+  rollio dalle immagini non concordano con quelli ricavati dagli occhi.
 
 > **Avvertenza.** Kite è un progetto sperimentale e **non è un dispositivo medico certificato**. Il
 > driver è un software non ufficiale che usa il tracciatore in modi non previsti dal produttore. Le

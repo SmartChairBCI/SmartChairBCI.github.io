@@ -4,7 +4,7 @@ project: kite
 kind: update
 authors: [Antonio Blescia, Bones]
 title: "Tobii 4C on GNU/Linux (follow-up): putting the driver to the test"
-description: I go back to the five next steps of the third part one by one and check them on the real 4C, without modifying the driver. Two 30-minute sessions without losses, an open output that works, a calibration that does not survive power-off, and pitch moving to the infrared images, for now only offline.
+description: I go back to the five next steps of the third part one by one and check them on the real 4C, without modifying the driver. Two 30-minute sessions without losses, an open output that works, a calibration that does not survive power-off, and pitch from the infrared images that, with a person in front, follows the head within about 2°.
 tags: [eye-tracking, tobii, linux, driver, latency, calibration]
 ---
 
@@ -19,15 +19,6 @@ go, however it went.
 In this entry I go back to those five steps and check them **one by one**. For each one I say what I
 did, what I measured, what went wrong and what remains to be done.
 
-Two premises, before the numbers.
-
-- **The driver was not modified during these tests.** I tested the code as it was. When a check would
-  have required changing it, I postponed the check rather than touching the code halfway through a
-  measurement.
-- **Nobody was sitting in front of the tracker.** In all the live tests the gaze was never valid and
-  the face was never found. It is the biggest limitation of this entry, and I repeat it where it
-  matters.
-
 ## The test environment
 
 | Item | Value |
@@ -35,7 +26,7 @@ Two premises, before the numbers.
 | Tracker | Tobii Eye Tracker 4C, firmware 4.7.0 |
 | Processor | AMD Ryzen 9 5950X |
 | Linux kernel | 7.2.15 |
-| Person in front of the tracker | none |
+| Person in front of the tracker | none, except in the pitch test (step 5) |
 
 ## The summary
 
@@ -55,7 +46,7 @@ I split the outcomes into three categories, because "not done" can mean very dif
 | 2. 4C captures in the tests | **(b) postponed** | a recording tool, which `dump` is not |
 | 3. Open output | **(a) passed** for UDP | live LSL (c); sending to several destinations (b) |
 | 4. Gaze calibration | **(a) negative result** on persistence | new calibration with a person and a clean test by unplugging the cable (c) |
-| 5. Pitch from the IR images | ported from the prototype, **verified offline only** | test with a person and an independent reference (c) |
+| 5. Pitch from the IR images | **(a) passed** with a person: follows the head, not the gaze, within about 2° | personal zero, a more precise reference, check of yaw and roll (c) |
 
 ## 1. The pipeline over long sessions
 
@@ -113,7 +104,9 @@ The highest value, 1339 µs in session C, is about one eighth of the time betwee
 
 ### What remains
 
-- **(c)** The same measurement with a person in front, which is the real use case.
+- **(c)** The same measurement with a person in front, which is the real use case. A first hint comes
+  from the test in step 5: with a person in front, 36 018 frames with no `host_drops` and no
+  `device_drops`. But it is a shorter session, and I did not analyse it like these two.
 - **(b)** With a future driver update: a `-duration` option to set the length of the session, and
   percentiles computed over the whole session, in addition to the 10 s windows.
 
@@ -197,21 +190,14 @@ To turn gaze into a point on the screen the 4C uses two pieces of information st
 - The **calibration**: a block of data that adapts the eye model to the person, obtained by having
   them look at a few points on the screen.
 
-### Negative result: after power-off they do not remain
+### Negative result: calibrations are not kept after the sensor is powered off
 
 - **The display area.** After the cold power-ons of 5 and 11 November, the 4C's display area measured
-  **4 × 4 mm**, the factory value. This contradicts the driver's README, which says the 4C keeps it. I
-  **have not yet corrected** the README, and it needs to be done. What I wrote in the second part
-  concerned closing the session, with the device still powered: that observation stands, but it must
-  not be extended to power-off.
-- **The calibration.** On 9 November I unplugged and reconnected the 4C, with `tobii-ws` stopped, a
-  service that starts the driver on behalf of another program. After 71 s the device held the
-  **factory calibration**: a 1469-byte block, identical to the one I had read on 4 November. I
+  **4 × 4 mm**, the factory value. What I wrote in the second part concerned closing the session, with
+  the device still powered: that observation stands, but it must not be extended to power-off.
+- **The calibration.** On 9 November I unplugged and reconnected the 4C. After 71 s the device held
+  the **factory calibration**: a 1469-byte block, identical to the one I had read on 4 November. I
   conclude that the calibration is **almost certainly lost** when the 4C is left without power.
-- **A clue that seems to say the opposite, but does not.** On the morning of 11 November the device
-  held a **357 KB** calibration block, much larger than the factory one. It was probably reapplied by
-  `tobii-ws`, which at start-up reads the calibration saved in a file (`calibration.bin`) and sends it
-  to the tracker. So it **does not prove** that the calibration survived power-off.
 
 The practical consequence, if confirmed, is clear: whoever uses the driver must reapply the display
 area and the calibration every time the 4C is powered on. The driver can already do this; no changes
@@ -223,8 +209,8 @@ Both checks are of kind **(c)** and neither requires modifying the driver:
 
 - a **new calibration** with a measurement of its accuracy, which requires a person in front of the
   tracker;
-- a **clean persistence test**: physically unplugging the cable with `tobii-ws` stopped, so that no
-  program can reapply the calibration, and reading it back at power-on.
+- a **clean persistence test**: physically unplugging the cable, with no program able to reapply the
+  calibration, and reading it back at power-on.
 
 ## 5. Head pitch from the infrared images
 
@@ -235,11 +221,23 @@ In the [8 November entry](/en/journal/tobii-4c-head-pitch-from-the-face/) I had 
 Landmarker ([Google AI Edge, n.d.](#references)), on a webcam. That method is now **ported** into the
 driver, on the 4C's infrared (IR) images: 640 × 480 pixels in greyscale, at 30 images per second.
 
+![Diagram of an aeroplane crossed by three axes that meet at the centre of gravity, marked by a yellow dot: the pitch axis runs from one wing to the other, the roll axis from tail to nose, the yaw axis is vertical. Around each axis a curved orange arrow shows the rotation.](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Yaw_Axis_Corrected.svg/960px-Yaw_Axis_Corrected.svg.png)
+
+*The three angles used to describe a rotation, on the most common example, an aeroplane. **Pitch** is
+the rotation around the axis that runs from one wing to the other: the nose goes up or down. **Yaw**
+is the rotation around the vertical axis: the nose goes left or right. **Roll** is the rotation
+around the axis that runs from tail to nose: one wing goes up and the other down. The same holds for
+the head: pitch turns around the line joining the ears (the "yes"), yaw around the vertical (the
+"no"), roll around the line from the back of the head to the nose (the head tilting towards a
+shoulder). Image: Auawise, derivative work by Jrvz, licence
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), from
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Yaw_Axis_Corrected.svg).*
+
 To turn image points into angles one needs to know the camera: its **focal length** in pixels and its
 position relative to the tracker. I recomputed this calibration of the IR camera from the session
 recorded on 7 November, which contains **698 samples**.
 
-### Results, offline only
+### The IR camera calibration, offline
 
 | Quantity | Recomputed | Previously saved |
 | --- | --- | --- |
@@ -257,8 +255,8 @@ The 9 November session, on the other hand, **contains no usable samples** for th
 
 With the image stream always on, the estimator processed **all the images**: 30 per second, none
 discarded. But with nobody in front it produced **no pitch value**. This is the expected behaviour,
-not an error: without a face there is nothing to measure. It does mean, however, that live I verified
-the workload, not the estimate.
+not an error: without a face there is nothing to measure. This test verifies the workload, not the
+estimate: for the estimate a person is needed.
 
 ### The model on the IR images, in a video
 
@@ -276,21 +274,79 @@ away, tilts and turns the head, opens the mouth.
 
 To read the video honestly:
 
-- The values in the **Head** panel, pitch included, are the interface's instantaneous values, **not
-  accuracy measurements**: I have not compared them with any reference.
+- The values in the **Head** panel, pitch included, are the interface's instantaneous values. The
+  video is not the accuracy test: that is described below.
 - In the model panel the camera appears calibrated with the saved focal length, 730 px, not with the
   recomputed one.
 - I covered the tracker's **serial number**, which the interface shows in two places.
 - The video is re-encoded at 30 frames per second for the website.
 
-The doubt from the 8 November entry still stands: that the model finds the face does not yet say how
-precisely it measures its rotation on infrared images, dark and taken from below.
+### Live, with a person in front
+
+On 11 November I repeated the test sitting in front of the 4C, about **63 cm** from the screen, with
+the driver's `run` command and the built-in Face Landmarker model. Before starting, the driver wrote
+the display area back to the 4C, 700 × 390 mm, taken from the `display.json` file: this is the
+reapplication at every power-on I discuss in step 4.
+
+The test has two phases, which answer two different questions.
+
+**Phase 1: does pitch follow the head or the gaze?** I kept my head still and moved only my eyes. The
+gaze covered a range of ±13°, and the point measured by the 4C matched the targets within about
+15 mm. The estimated pitch changed by at most **1.3°** (RMS 1.0°). So the network estimates the
+position of the head and is not dragged along by the direction of the eyes. This is the condition for
+gaze and head to be used together, as two distinct signals.
+
+**Phase 2: are the angles right?** I pointed my nose, by hand, at 11 targets along the vertical,
+between −170 and +170 mm from the centre, some of them repeated. For each target the expected change
+is the angle by which the head has to rotate relative to the centre, derived from the geometry of the
+setup.
+
+| Target | Measured pitch | Measured change from centre | Expected change |
+| ---: | ---: | ---: | ---: |
+| +170 mm | +15.7° / +16.6° | +14.7° | +13.2° |
+| +85 mm | +10.4° / +9.7° | +8.6° | +6.6° |
+| 0 | +2.1° / +0.2° / +2.2° | 0 | 0 |
+| −85 mm | −2.9° / −7.5° | −6.7° | −6.8° |
+| −170 mm | −10.0° / −10.2° | −11.6° | −13.9° |
+
+When a target was repeated, the measured pitch column lists all the values.
+
+How to read the numbers:
+
+- Between measured and expected change the **slope** is **1.00** and the **correlation** is
+  **0.986**: one expected degree corresponds on average to one measured degree, and the points lie
+  almost on a straight line.
+- The difference between the two changes averages 1.0°, with an RMS of **1.9°** and a maximum of
+  2.6°. The reference is the nose pointed by hand, which has an error of its own, probably similar:
+  part of these degrees comes from the reference, not from the estimate.
+- The **noise** on a still target is between 0.1° and 1.3° (standard deviation), and the same target
+  repeated gives results within about 2°. The exception is −85 mm (−2.9° versus −7.5°), most likely
+  because I pointed my nose differently the two times.
+- The face was found in **100 %** of the images, 30 per second, 13 ms each. Meanwhile the pipeline
+  produced 36 018 frames with no `host_drops` and no `device_drops`.
+
+### Negative results
+
+- **The personal zero is missing.** At the centre the absolute pitch is +1.5° against the expected
+  −2.9°: there is a fixed offset of about 4°. The changes are right, the zero is not. It is removed
+  with the head-pose calibration the driver already has, `tobii4c headpose-calibrate`, option 2,
+  "face only". The driver does not need to change.
+- **Yaw and roll do not add up.** During the test the yaw (the "no" movement) estimated from the
+  images differed from the one derived from the eyes by 5–15° (RMS up to 15°), and the roll (the
+  sideways tilt) by 2–6°. They were not the subject of the test, but they need to be checked
+  separately.
+
+The test partly answers the doubt from the 8 November entry: on infrared images, dark and taken from
+below, the model measures changes in pitch within about 2°. This holds for one person, in one
+session, with a reference pointed by hand.
 
 ### What remains
 
-A test of kind **(c)**: with a person in front, comparing pitch with an **independent reference**. On
-Windows Tobii's software provides a head pose, but on Linux it does not exist, so the reference will
-have to come from somewhere else.
+- **(c)** The personal zero, with `tobii4c headpose-calibrate`.
+- **(c)** A reference more precise than a nose pointed by hand, to separate the error of the estimate
+  from that of the reference. On Windows Tobii's software provides a head pose, but on Linux it does
+  not exist, so the reference will have to come from somewhere else.
+- **(c)** A separate check of yaw and roll from the images.
 
 ## What I learned
 
@@ -300,36 +356,20 @@ have to come from somewhere else.
 - **Measurements without a person have a behaviour of their own.** The slightly lower rate and the
   presence that changes on its own are real results, but they concern an empty scene. I do not extend
   them to the real use case.
-- **The 4C forgets when it is switched off.** It is a negative result that contradicts my README, and
-  it changes how the device is used: display area and calibration must be reapplied at every power-on.
+- **The 4C forgets when it is switched off.** It is a negative result that changes how the device is
+  used: display area and calibration must be reapplied at every power-on.
+- **Pitch from the IR images works.** It follows the head and not the gaze, and the changes match the
+  expected ones within about 2°. The personal zero is still missing.
 - **Postponing is not failing.** Two checks are waiting for a driver update. I preferred not to change
   the code during the measurements, so as to know for certain what I was measuring.
 
 ## Open problems
 
-- All the live tests are **without a person**: gaze never valid, face never found.
+- The tests of steps 1–4 are **without a person**: gaze never valid, face never found. The pitch
+  test has a single person.
 - A single 4C unit, a single firmware (4.7.0), a single computer.
-- The driver's README still says that the 4C keeps the display area: this is wrong after a power-off
-  and needs to be corrected.
-- Pitch from the IR images does not yet have a reference to be compared with.
-
-## Next steps
-
-With a person in front of the tracker, or with an action outside the code **(c)**:
-
-1. Repeat the long sessions of step 1 with a person in front.
-2. Run a new calibration and measure its accuracy.
-3. Test calibration persistence by physically unplugging the cable, with `tobii-ws` stopped.
-4. Test pitch from the IR images with a person and an independent reference.
-5. Install `liblsl` and test the LSL output live.
-6. Correct the README on the persistence of the display area.
-
-With future driver updates **(b)**:
-
-1. A `-duration` option and latency percentiles computed over the whole session.
-2. A recording option in the `.hex` format of the test captures, with the serial number zeroed, to
-   add 4C captures to the tests.
-3. Sending UDP packets to several destinations.
+- Pitch has a nose pointed by hand as its reference, and the personal zero is missing. Yaw and roll
+  from the images do not agree with those derived from the eyes.
 
 > **Disclaimer.** Kite is an experimental project and **is not a certified medical device**. The
 > driver is unofficial software that uses the tracker in ways the manufacturer did not foresee. The
