@@ -205,7 +205,8 @@ interno.
   alimentazione.
 
 La conseguenza pratica, se confermata, è chiara: chi usa il driver deve riapplicare area dello schermo
-e calibrazione a ogni accensione del 4C. Il driver sa già farlo; non servono modifiche.
+e calibrazione a ogni accensione del 4C. Il driver sa già farlo, con le opzioni `-display-mm` e
+`-calibration` del comando `run`; non servono modifiche.
 
 ### Che cosa resta
 
@@ -290,8 +291,14 @@ Per leggere il video con onestà:
 
 L'11 novembre ho ripetuto la prova seduto davanti al 4C, a circa **63 cm** dallo schermo, con il
 comando `run` del driver e il modello Face Landmarker incorporato. Prima di cominciare il driver ha
-riscritto sul 4C l'area dello schermo, 700 × 390 mm, presa dal file `display.json`: è la
-riapplicazione a ogni accensione di cui parlo al passo 4.
+riscritto sul 4C l'area dello schermo, 700 × 390 mm, perché l'ho avviato con l'opzione
+`-display-mm 700x390`: è la riapplicazione a ogni accensione di cui parlo al passo 4.
+
+> **Correzione del 13 novembre.** In una prima versione avevo scritto che l'area era stata presa dal
+> file `display.json`. Non è così: `run` riscrive l'area solo se riceve `-display-mm`, e nessun comando
+> del driver rilegge `display.json`, che viene scritto dalla configurazione dello schermo. Le misure
+> erano le stesse del file, ma le avevo passate io. Ne parlo nella
+> [voce su Tobii Race](/diario/tobii-race-un-gioco-per-mettere-alla-prova-il-4c/).
 
 La prova ha due fasi, che rispondono a due domande diverse.
 

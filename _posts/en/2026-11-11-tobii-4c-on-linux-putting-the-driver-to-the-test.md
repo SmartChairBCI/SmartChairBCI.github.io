@@ -200,8 +200,8 @@ To turn gaze into a point on the screen the 4C uses two pieces of information st
   conclude that the calibration is **almost certainly lost** when the 4C is left without power.
 
 The practical consequence, if confirmed, is clear: whoever uses the driver must reapply the display
-area and the calibration every time the 4C is powered on. The driver can already do this; no changes
-are needed.
+area and the calibration every time the 4C is powered on. The driver can already do this, with the
+`-display-mm` and `-calibration` options of the `run` command; no changes are needed.
 
 ### What remains
 
@@ -285,8 +285,14 @@ To read the video honestly:
 
 On 11 November I repeated the test sitting in front of the 4C, about **63 cm** from the screen, with
 the driver's `run` command and the built-in Face Landmarker model. Before starting, the driver wrote
-the display area back to the 4C, 700 × 390 mm, taken from the `display.json` file: this is the
-reapplication at every power-on I discuss in step 4.
+the display area back to the 4C, 700 × 390 mm, because I started it with the
+`-display-mm 700x390` option: this is the reapplication at every power-on I discuss in step 4.
+
+> **Correction of 13 November.** In a first version I wrote that the area had been taken from the
+> `display.json` file. That is not the case: `run` rewrites the area only if it receives `-display-mm`,
+> and no driver command re-reads `display.json`, which is written by the screen setup. The values were
+> the same as in the file, but I had passed them myself. I discuss it in the
+> [entry on Tobii Race](/en/journal/tobii-race-a-driving-game-to-put-the-4c-to-the-test/).
 
 The test has two phases, which answer two different questions.
 

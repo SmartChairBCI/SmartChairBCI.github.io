@@ -14,12 +14,22 @@ next_steps:
   - text: Estimate head pitch from the face, tested with a webcam
     done: true
   - text: Bring the pitch estimate to the 4C's IR images
+    done: true
+  - text: Run a first complete Tobii Race with the 4C
+    done: true
+  - text: Record Tobii Race telemetry to a file
+    done: false
+  - text: Measure end-to-end latency with an external method
+    done: false
+  - text: Have the display area reapplied every time the driver starts
     done: false
   - text: Measure pitch accuracy against a reference
     done: false
   - text: Try the face model with other people
     done: false
   - text: Assess the EAR on IR images as a click
+    done: false
+  - text: Explore the literature for the new keyboard
     done: false
 ---
 

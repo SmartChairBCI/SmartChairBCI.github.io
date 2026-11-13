@@ -14,12 +14,22 @@ next_steps:
   - text: Stimare il beccheggio della testa dal viso, in prova con una webcam
     done: true
   - text: Portare la stima del beccheggio sulle immagini IR del 4C
+    done: true
+  - text: Fare una prima gara completa di Tobii Race con il 4C
+    done: true
+  - text: Registrare su file la telemetria di Tobii Race
+    done: false
+  - text: Misurare la latenza da un capo all'altro con un metodo esterno
+    done: false
+  - text: Far riapplicare l'area dello schermo a ogni avvio del driver
     done: false
   - text: Misurare l'accuratezza del beccheggio contro un riferimento
     done: false
   - text: Provare il modello del viso con altre persone
     done: false
   - text: Valutare l'EAR sulle immagini IR come clic
+    done: false
+  - text: Approfondire la letteratura per la nuova tastiera
     done: false
 ---
 
