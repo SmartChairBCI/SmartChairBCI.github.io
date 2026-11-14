@@ -384,7 +384,7 @@ Come la leggo:
 - **Le prime due regole tolgono pochi errori**, ma quasi gratis.
 - **Il lessico grande peggiora un poco**: un errore in più e circa 9 ms per lettera. È atteso: il modello
   di 544 parole conosceva solo le parole delle frasi da copiare, quindi era più favorevole del dovuto. Il
-  lessico grande ha circa 140 000 parole e lo descrivo nella
+  lessico grande ha circa 140.000 parole e lo descrivo nella
   [parte 2](/diario/tastiera-ibrida-2-la-lingua-come-informazione/).
 - Gli errori che restano sono soprattutto occhiate di ricerca
   ([parte 4](/diario/tastiera-ibrida-4-le-occhiate-di-ricerca/)).
