@@ -8,7 +8,7 @@ question: >-
   Come si può costruire uno strumento di comunicazione aumentativa e alternativa aperto,
   semplice da usare e adattabile alle capacità di ogni persona?
 icon: kite
-status: review           # idea | review | design | prototype | testing | results
+status: prototype        # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ data di avvio della ricerca
 next_steps:
   - text: Stimare il beccheggio della testa dal viso, in prova con una webcam
