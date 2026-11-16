@@ -29,6 +29,11 @@ Questa voce è una nota di studio e **non contiene misure**. Per ogni argomento 
 3. **che cosa potrebbe cambiare** rispetto alla vecchia tastiera a dwell fisso di 1 s, punto per
    punto sui suoi limiti. Sono ipotesi da verificare, non risultati.
 
+> **Pubblicazione tecnica anteriore.** Una prima versione di questa voce è pubblica dal
+> 14 novembre 2026 nel repository GitHub del sito. La descrizione tecnica completa dei metodi della
+> tastiera ibrida, con le varianti, è archiviata su Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Da quella data fanno
+> parte dello stato della tecnica: nessuno può brevettarli come nuovi.
+
 ## Quello che do per noto
 
 Alcune basi le ho già spiegate, e qui le richiamo soltanto:

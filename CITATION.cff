@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Se usi questi contenuti, citali come indicato qui. / If you use this material, please cite it as below."
+title: "SmartChair: diario di ricerca aperto sugli ausili per la disabilità motoria"
+authors:
+  - family-names: Blescia
+    given-names: Antonio
+license: CC-BY-4.0
+url: "https://smartchair.it"
+repository-code: "https://github.com/SmartChairBCI/SmartChairBCI.github.io"
+keywords:
+  - brain-computer interface
+  - eye tracking
+  - gaze typing
+  - augmentative and alternative communication
+  - assistive technology
+references:
+  - type: report
+    title: "Probabilistic gaze typing with saccade-anchored adaptive dwell, corrective-saccade-aware selection, luminance-compensated pupillometry and gaze-aware correction"
+    authors:
+      - family-names: Blescia
+        given-names: Antonio
+    year: 2026
+    version: "1.0"
+    publisher:
+      name: Zenodo
+    doi: "10.5281/zenodo.24282465"
+    license: CC-BY-4.0

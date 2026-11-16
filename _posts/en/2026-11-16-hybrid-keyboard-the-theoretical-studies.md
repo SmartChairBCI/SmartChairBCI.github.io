@@ -27,6 +27,11 @@ This entry is a study note and **contains no measurements**. For each topic I de
 3. **what could change** compared with the old fixed 1 s dwell keyboard, point by point against its
    limitations. These are hypotheses to be tested, not results.
 
+> **Prior technical disclosure.** A first version of this entry has been public since
+> 14 November 2026 in the site's GitHub repository. The full technical description of the hybrid
+> keyboard methods, including variants, is archived on Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Since that date
+> they are part of the state of the art and cannot be patented as new by anyone.
+
 ## What I take as known
 
 I have already explained some of the basics, and here I only refer back to them:

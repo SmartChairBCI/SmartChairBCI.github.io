@@ -47,3 +47,7 @@ Kite vuole essere uno strumento di CAA **aperto**, che chiunque possa usare, stu
 ## A che punto sono
 
 La ricerca è appena partita. Racconterò ogni passo nel [diario](/diario/).
+
+I metodi della nuova tastiera ibrida a sguardo sono pubblici dal 14 novembre 2026. La loro
+descrizione tecnica completa, con le varianti, è archiviata su Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Da quella
+data fanno parte dello stato della tecnica: nessuno può brevettarli come nuovi.

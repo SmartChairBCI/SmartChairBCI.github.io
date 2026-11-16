@@ -47,3 +47,7 @@ Kite aims to be an **open** AAC tool that anyone can use, study and adapt.
 ## Where I am
 
 The research has just started. I will document every step in the [journal](/en/journal/).
+
+The methods of the new hybrid gaze keyboard have been public since 14 November 2026. Their full
+technical description, including variants, is archived on Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Since that date
+they are part of the state of the art and cannot be patented as new by anyone.
