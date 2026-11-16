@@ -30,7 +30,7 @@ next_steps:
   - text: Assess the EAR on IR images as a click
     done: false
   - text: Explore the literature for the new keyboard
-    done: false
+    done: true
 ---
 
 ## Context

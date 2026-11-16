@@ -30,7 +30,7 @@ next_steps:
   - text: Valutare l'EAR sulle immagini IR come clic
     done: false
   - text: Approfondire la letteratura per la nuova tastiera
-    done: false
+    done: true
 ---
 
 ## Contesto
