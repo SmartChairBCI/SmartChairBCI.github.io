@@ -153,28 +153,42 @@ and have the synthetic voice say them.
   <a href="/assets/img/kite/kite-tastiera-ibrida-presentazione.mp4">download it here</a> (MP4, 11.9 MB).
 </video>
 
-What you can see (the video is in Italian):
+The video is in Italian. It opens on **Kite's menu** (0:00), with the three components of the hybrid
+selector all active: (1) prediction and dynamic touch areas; (2) modulation by pupillary load; (3)
+Italian autocorrect and suggestions.
 
-1. **Kite's menu**, in the first seconds: the title «Tastiera a sguardo ibrida: tempi guidati dalle
-   saccadi, dalla lingua e dalla pupilla» (hybrid gaze keyboard: timing driven by saccades, language and
-   pupil), the tracker status and the three components of the hybrid selector: (1) prediction and
-   dynamic touch areas; (2) modulation by pupillary load; (3) Italian autocorrect and suggestions. They
-   are all active.
-2. **The pupil-luminance calibration**, up to about 2:00. I explain why it is needed: the pupil changes
-   diameter both with light and with mental effort, and to obtain an index of effort the effect of light
-   must first be estimated and subtracted. Then I look at a cross for about 30 seconds while the background becomes brighter
-   and darker. At the end the program shows the measured diameter and the one predicted from light alone.
-3. **The explanation**, from about 2:00 to 5:30. With the menu on screen I summarise the ideas of the
-   keyboard: keys that are resized according to the probability of the letter, a bit like on smartphone
-   keyboards; the autocorrect that suggests the right word even after several errors; selection times
-   that depend on saccades, prediction and pupil instead of a fixed time; the synthetic voice that runs
-   on the computer; the sentences the program learns in order to propose completions.
-4. **Typing**, from about 5:30. With my gaze I type «vorrei un bicchiere di acqua» (I would like a glass
-   of water), «ho freddo» (I am cold), «il mio nome è antonio» (my name is antonio) and «tu come ti
-   chiami» (what is your name). After each sentence I fixate the **parla** (speak) key and the synthetic
-   voice says it: you can hear it in the video. Three suggested words appear above the keyboard. For two
-   sentences, after a few letters, the program proposes the rest in grey, and I accept it by fixating
-   it. In the last seconds the menu returns.
+From about 0:15 comes the **pupil-luminance calibration**. The pupil responds both to light and to mental
+effort: to use it as an index of effort, the effect of light must first be estimated and subtracted. So,
+from 1:15, I look at a cross while the background goes from bright to dark. Around 1:50 a graph compares
+the measured diameter (white dots) with the one predicted from light alone (orange line).
+
+Until about 5:30 I explain the ideas of the keyboard out loud, and from 5:33 they can be seen at work,
+with the **diagnostic view** on. The yellow dashed lines are the real boundaries of the keys: they widen
+towards likely letters and shrink around unlikely ones, a bit like on smartphone keyboards. The
+percentages on the keys are the probability of the next letter. At 5:45, after «vorrei un bic», C is at
+53% and I at 32%: «bicchiere» (glass) or «bici» (bike).
+
+When the gaze rests on a key, a **blue arc** closes around the letter. The time is no longer the old
+keyboard's fixed second: it starts when the eye lands after a saccade and ranges from 120 to 700 ms
+depending on the probability of the letter (the details are in the
+[theoretical studies](/en/journal/hybrid-keyboard-the-theoretical-studies/#1-saccades-counting-time-from-when-the-eye-lands)).
+The pupil acts only here: its index, cleaned of the effect of light, can lengthen the times when load
+rises, and this is a hypothesis still to be tested. In the video, around 3:15, I simplify it.
+
+Above the keyboard, the **suggestion bar** proposes three words: at 5:45 I choose «bicchiere» with a
+single glance, and shortly afterwards «acqua» (water). Whatever the **autocorrect** does not fix on its
+own also ends up there. The autocorrect, which I talk about around 2:45, steps in at the space: it
+compares the selected letters with Italian words, taking the typical errors of the gaze into account.
+
+The **grey completion** comes from sentences already said in the past. At 6:21, after «il mio nom», «e è
+antonio» appears in grey: I fixate it for one second and the sentence is accepted (my name is antonio).
+At 6:32 the same happens with «tu come ti chiami» (what is your name).
+
+The **parla** (speak) key sends the text to Piper, a speech synthesiser that runs on the computer: it is
+heard around 5:55, and at 6:03 you can see the arc closing on speak after «ho freddo» (I am cold). While
+the voice is speaking, the text turns light blue and the keyboard selects nothing, so I can look at the
+listener. Then the text is cleared; if I fix my gaze on the **cancella** (delete) key right afterwards, it brings
+the text back, just as it undoes a correction or a sentence just accepted. In the last seconds the menu returns.
 
 > **Disclaimer.** Kite is an experimental project and **is not a certified medical device**. The video
 > shows a test I did on myself, not a ready-to-use assistive device. Anyone who depends on an AAC tool to

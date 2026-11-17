@@ -156,26 +156,43 @@ frasi e le faccio dire alla voce sintetica.
   <a href="/assets/img/kite/kite-tastiera-ibrida-presentazione.mp4">scaricare qui</a> (MP4, 11,9 MB).
 </video>
 
-Che cosa si vede:
+Il video si apre sul **menu di Kite** (0:00), con i tre componenti del selettore ibrido tutti attivi:
+(1) predizione e aree di tocco dinamiche; (2) modulazione dal carico pupillare; (3) correttore italiano e
+suggerimenti.
 
-1. **Il menu di Kite**, nei primi secondi: il titolo «Tastiera a sguardo ibrida: tempi guidati dalle
-   saccadi, dalla lingua e dalla pupilla», lo stato del tracciatore e i tre componenti del selettore
-   ibrido: (1) predizione e aree di tocco dinamiche; (2) modulazione dal carico pupillare; (3) correttore
-   italiano e suggerimenti. Sono tutti attivi.
-2. **La calibrazione pupilla-luminanza**, fino a circa 2:00. Spiego perché serve: la pupilla cambia
-   diametro sia con la luce sia con lo sforzo mentale, e per avere un indice dello sforzo bisogna prima
-   stimare e sottrarre l'effetto della luce. Poi guardo una croce per circa 30 secondi mentre lo sfondo diventa più chiaro e
-   più scuro. Alla fine il programma mostra il diametro misurato e quello previsto dalla sola luce.
-3. **La spiegazione**, da circa 2:00 a 5:30. Con il menu sullo schermo riassumo le idee della tastiera:
-   i tasti che si ridimensionano secondo la probabilità della lettera, un po' come sulle tastiere degli
-   smartphone; il correttore che suggerisce la parola giusta anche dopo più errori; i tempi di selezione
-   che dipendono dalle saccadi, dalla predizione e dalla pupilla invece che da un tempo fisso; la voce
-   sintetica che gira sul computer; le frasi che il programma impara per proporre il completamento.
-4. **La scrittura**, da circa 5:30. Scrivo con lo sguardo «vorrei un bicchiere di acqua», «ho freddo»,
-   «il mio nome è antonio» e «tu come ti chiami». Dopo ogni frase fisso il tasto **parla** e la voce
-   sintetica la pronuncia: nel video si sente. Sopra la tastiera compaiono tre parole suggerite. Per due
-   frasi, dopo poche lettere, il programma propone il resto in grigio, e io lo accetto fissandolo. Negli
-   ultimi secondi si torna al menu.
+Da circa 0:15 c'è la **calibrazione pupilla-luminanza**. La pupilla risponde sia alla luce sia allo sforzo
+mentale: per usarla come indice dello sforzo bisogna prima stimare e sottrarre l'effetto della luce. Per
+questo, da 1:15, guardo una croce mentre lo sfondo passa dal chiaro allo scuro. Verso 1:50 un grafico
+confronta il diametro misurato (punti bianchi) con quello previsto dalla sola luce (linea arancione).
+
+Fino a 5:30 circa spiego a voce le idee della tastiera, che da 5:33 si vedono all'opera, con la **vista
+diagnostica** accesa. Le linee tratteggiate gialle sono i confini veri dei tasti: si allargano verso le
+lettere probabili e si stringono attorno alle improbabili, un po' come sulle tastiere degli smartphone.
+Le percentuali sui tasti sono la probabilità della lettera successiva. A 5:45, dopo «vorrei un bic», la C
+vale il 53% e la I il 32%: «bicchiere» o «bici».
+
+Quando lo sguardo si ferma su un tasto, un **arco blu** si chiude attorno alla lettera. Il tempo non è più
+il secondo fisso della vecchia tastiera: parte da quando l'occhio atterra dopo una saccade e va da 120 a
+700 ms secondo la probabilità della lettera (i dettagli sono negli
+[studi teorici](/diario/tastiera-ibrida-gli-studi-teorici/#1-saccadi-contare-il-tempo-da-quando-locchio-atterra)).
+La pupilla agisce solo qui: il suo indice, depurato dall'effetto della luce, può allungare i tempi quando
+il carico sale, ed è un'ipotesi ancora da verificare. Nel video, verso 3:15, la semplifico.
+
+Sopra la tastiera, la **barra dei suggerimenti** propone tre parole: a 5:45 scelgo «bicchiere» con un solo
+sguardo, poco dopo «acqua». Lì resta anche ciò che il **correttore** non sistema da solo. Il correttore,
+di cui parlo verso 2:45, interviene allo spazio: confronta le lettere selezionate con le parole italiane,
+tenendo conto degli errori tipici dello sguardo.
+
+Il **completamento in grigio** viene dalle frasi già dette in passato. A 6:21, dopo «il mio nom», compare
+in grigio «e è antonio»: lo fisso per un secondo e la frase è accettata. A 6:32 accade lo stesso con «tu
+come ti chiami».
+
+Il tasto **parla** manda il testo a Piper, una sintesi vocale che gira sul computer: la si sente verso
+5:55, e a 6:03 si vede l'arco chiudersi su parla dopo «ho freddo». Mentre la voce parla, il testo diventa
+azzurro e la tastiera non seleziona nulla, così posso guardare chi ascolta. Poi il testo si cancella; se
+subito dopo fisso il tasto **cancella**, lo rimette, così come annulla una correzione o una frase appena
+accettata.
+Negli ultimi secondi si torna al menu.
 
 > **Avvertenza.** Kite è un progetto sperimentale e **non è un dispositivo medico certificato**. Il video
 > mostra una prova fatta su me stesso, non un ausilio pronto all'uso. Chi dipende da uno strumento di CAA
