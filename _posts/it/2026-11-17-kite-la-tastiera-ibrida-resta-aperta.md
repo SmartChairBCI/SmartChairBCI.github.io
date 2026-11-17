@@ -50,7 +50,7 @@ opporre: se descrive ciò che la domanda rivendica, quel metodo non è nuovo.
 
 | | Con un brevetto | Con la pubblicazione difensiva |
 | --- | --- | --- |
-| Chi può sfruttare i metodi, anche commercialmente | il titolare e chi ha il suo permesso | chiunque, salvo brevetti altrui già esistenti ([vedi i limiti più sotto](#che-cosa-una-pubblicazione-difensiva-non-fa)) |
+| Chi può sfruttare i metodi, anche commercialmente | il titolare e chi ha il suo permesso | chiunque, salvo brevetti altrui già esistenti |
 | Chi può ottenere un brevetto su quei metodi | chi deposita per primo una domanda, se sono nuovi | nessuno: non sono più nuovi |
 | Che cosa resta a me | un diritto esclusivo | il riconoscimento, con il mio nome e una data |
 
@@ -207,25 +207,6 @@ Che cosa si vede:
 > per comunicare dovrebbe avere sempre un'alternativa di riserva, per esempio una tabella alfabetica su
 > carta. Le prove con altre persone richiedono il consenso informato e, quando serve, il parere di un
 > comitato etico.
-
-## Che cosa una pubblicazione difensiva non fa
-
-Per onestà, anche i limiti di questa scelta:
-
-- **Non mi dà nessun diritto esclusivo sui metodi.** Non posso impedire a nessuno di usarli né chiedere
-  un compenso per farlo: è proprio lo scopo. Il testo della descrizione resta mio, con la licenza
-  CC BY 4.0.
-- **Non tocca i brevetti già depositati.** La mia pubblicazione vale contro le domande con data di
-  deposito o di priorità successiva ([EPO, s.d.-a](#riferimenti)). Se qualcuno avesse chiesto prima di me
-  un brevetto su un metodo simile, la mia pubblicazione non lo cancellerebbe. Pubblicare non equivale a
-  verificare la cosiddetta libertà di attuazione (in inglese *freedom to operate*), cioè a cercare i
-  brevetti altrui che potrebbero già coprire qualcosa di simile.
-- **Copre solo ciò che descrive.** Un'idea davvero nuova, che vada oltre quello che ho scritto, resta
-  brevettabile da chi la inventa. Le varianti servono a ridurre questo margine, non ad azzerarlo.
-- **Funziona se qualcuno la trova.** Non posso escludere che un ufficio brevetti non la veda e conceda
-  comunque un brevetto. In quel caso la pubblicazione resterebbe una prova datata da usare per
-  contestarlo. È il motivo per cui uscirà anche su TDCommons.
-- **Non sono un avvocato.** Questa voce racconta una scelta e i suoi motivi: non è una consulenza legale.
 
 ## Prossimo passo: il codice
 

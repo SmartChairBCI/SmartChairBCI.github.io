@@ -49,7 +49,7 @@ if it describes what the application claims, that method is not new.
 
 | | With a patent | With a defensive publication |
 | --- | --- | --- |
-| Who can exploit the methods, commercially too | the owner and whoever has their permission | anyone, except for existing third-party patents ([see the limits below](#what-a-defensive-publication-does-not-do)) |
+| Who can exploit the methods, commercially too | the owner and whoever has their permission | anyone, except for existing third-party patents |
 | Who can obtain a patent on those methods | whoever files an application first, if they are new | nobody: they are no longer new |
 | What is left for me | an exclusive right | recognition, with my name and a date |
 
@@ -205,25 +205,6 @@ What you can see (the video is in Italian):
 > shows a test I did on myself, not a ready-to-use assistive device. Anyone who depends on an AAC tool to
 > communicate should always have a backup alternative, such as a paper alphabet board. Tests with other
 > people require informed consent and, where needed, the approval of an ethics committee.
-
-## What a defensive publication does not do
-
-In fairness, the limits of this choice too:
-
-- **It gives me no exclusive right over the methods.** I cannot prevent anyone from using them, nor ask
-  for payment to do so: that is precisely the point. The text of the description remains mine, under
-  the CC BY 4.0 licence.
-- **It does not affect patents already filed.** My publication counts against applications with a later
-  filing or priority date ([EPO, n.d.-a](#references)). If someone had applied before me for a patent on
-  a similar method, my publication would not cancel it. Publishing is not the same as
-  checking the so-called *freedom to operate*, that is, searching for other people's patents that might
-  already cover something similar.
-- **It only covers what it describes.** A truly new idea, going beyond what I have written, remains
-  patentable by whoever invents it. The variants reduce this margin; they do not eliminate it.
-- **It works if someone finds it.** I cannot rule out that a patent office misses it and grants a patent
-  anyway. In that case the publication would remain dated evidence to use to challenge it. That is why it
-  will also appear on TDCommons.
-- **I am not a lawyer.** This entry describes a choice and its reasons: it is not legal advice.
 
 ## Next step: the code
 
