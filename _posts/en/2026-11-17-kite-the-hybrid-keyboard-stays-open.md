@@ -176,31 +176,6 @@ What you can see (the video is in Italian):
    sentences, after a few letters, the program proposes the rest in grey, and I accept it by fixating
    it. In the last seconds the menu returns.
 
-### How to read the video
-
-- **It is a demonstration, not a measurement.** One session, one person, that is me, and I know the
-  keyboard because I built it. I did not count times, errors or words per minute. Tests with other people
-  are among the [next steps](/en/journal/hybrid-keyboard-the-theoretical-studies/#next-steps) of the
-  16 November entry.
-- **The program already knew some sentences.** The grey completion comes from sentences the synthetic
-  voice had already said before the recording. Typing a sentence that has already been learned takes
-  fewer selections than typing a new one (I did not measure it).
-- **The diagnostic view is on.** The yellow dashed lines are the touch areas of the keys, which are not
-  visible in normal use. The percentages on the keys are the probabilities that the prediction assigns
-  to the next letter.
-- **The numbers on screen**, such as the distance from the tracker, the percentage of valid pupil samples
-  or the parameters of the light model, apply to that moment of that session. I do not comment on them: they
-  are not systematic measurements.
-- **A simplification to correct.** Out loud I say that pupil dilation helps to understand when I want to
-  select a key and to "validate the click". Put that way, it is more than what the keyboard does and more
-  than what I know. The pupil is too slow to decide a single letter: as I explain in the
-  [section on the pupil](/en/journal/hybrid-keyboard-the-theoretical-studies/#what-could-change-compared-with-the-1-s-dwell-2)
-  of the theoretical studies, its index can at most lengthen the selection times when load rises. And
-  that is a hypothesis still to be tested.
-- **The video is reduced for the site** to 1280 × 720 pixels, with single-channel audio: the smallest
-  text, at the top and bottom, is only partly readable. Bottom right, throughout the video, the webcam
-  films me.
-
 > **Disclaimer.** Kite is an experimental project and **is not a certified medical device**. The video
 > shows a test I did on myself, not a ready-to-use assistive device. Anyone who depends on an AAC tool to
 > communicate should always have a backup alternative, such as a paper alphabet board. Tests with other

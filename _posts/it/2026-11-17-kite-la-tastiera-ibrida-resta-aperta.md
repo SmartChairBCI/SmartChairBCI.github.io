@@ -177,31 +177,6 @@ Che cosa si vede:
    frasi, dopo poche lettere, il programma propone il resto in grigio, e io lo accetto fissandolo. Negli
    ultimi secondi si torna al menu.
 
-### Come leggere il video
-
-- **È una dimostrazione, non una misura.** Una sessione, una persona, cioè io, che conosco la tastiera
-  perché l'ho costruita. Non ho contato tempi, errori o parole al minuto. Le prove con altre persone sono
-  tra i [prossimi passi](/diario/tastiera-ibrida-gli-studi-teorici/#prossimi-passi) della voce del
-  16 novembre.
-- **Alcune frasi il programma le conosceva già.** Il completamento in grigio viene dalle frasi che la
-  voce sintetica aveva già detto prima della registrazione. Scrivere una frase già imparata richiede meno
-  selezioni che scriverne una nuova (non l'ho misurato).
-- **La vista diagnostica è accesa.** Le linee tratteggiate gialle sono le aree di tocco dei tasti, che
-  durante l'uso normale non si vedono. Le percentuali sui tasti sono le probabilità che la predizione
-  assegna alla lettera successiva.
-- **I numeri sullo schermo**, come la distanza dal tracciatore, la percentuale di campioni con la pupilla
-  valida o i parametri del modello della luce, valgono per quel momento di quella sessione. Non li
-  commento: non sono misure sistematiche.
-- **Una semplificazione da correggere.** A voce dico che la dilatazione della pupilla aiuta a capire
-  quando voglio selezionare un tasto e a «validare il clic». Detto così, è più di quello che la tastiera
-  fa e di quello che so. La pupilla è troppo lenta per decidere una singola lettera: come spiego nella
-  [sezione sulla pupilla](/diario/tastiera-ibrida-gli-studi-teorici/#che-cosa-potrebbe-cambiare-rispetto-al-dwell-di-1-s-2)
-  degli studi teorici, il suo indice può al massimo allungare i tempi di selezione quando il carico
-  sale. Ed è un'ipotesi ancora da verificare.
-- **Il video è ridotto per il sito** a 1280 × 720 pixel, con l'audio su un solo canale: le scritte più
-  piccole, in alto e in basso, si leggono solo in parte. In basso a destra, per tutto il video, la webcam
-  riprende me.
-
 > **Avvertenza.** Kite è un progetto sperimentale e **non è un dispositivo medico certificato**. Il video
 > mostra una prova fatta su me stesso, non un ausilio pronto all'uso. Chi dipende da uno strumento di CAA
 > per comunicare dovrebbe avere sempre un'alternativa di riserva, per esempio una tabella alfabetica su
