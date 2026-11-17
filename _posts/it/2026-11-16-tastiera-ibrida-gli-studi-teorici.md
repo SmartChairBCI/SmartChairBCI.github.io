@@ -15,7 +15,7 @@ Avevo promesso di trattarli nella voce successiva. Questa è quella voce, per i 
 che sono entrati davvero nella nuova tastiera: **saccadi**, **predizione**, **pupilla** e
 **correttore**.
 
-La nuova tastiera vive per ora in un banco di prova, il banco tobii4c-hybridbci. È un programma per
+La nuova tastiera vive per ora in un banco di prova. È un programma per
 Linux che legge il Tobii Eye Tracker 4C attraverso il mio driver, a 90 campioni al secondo, e mette
 sullo stesso compito la vecchia tastiera e quella nuova. La nuova è «ibrida» nel senso che non si
 affida al solo tempo di fissazione: combina il movimento degli occhi, un modello della lingua
@@ -29,10 +29,9 @@ Questa voce è una nota di studio e **non contiene misure**. Per ogni argomento 
 3. **che cosa potrebbe cambiare** rispetto alla vecchia tastiera a dwell fisso di 1 s, punto per
    punto sui suoi limiti. Sono ipotesi da verificare, non risultati.
 
-> **Pubblicazione tecnica anteriore.** Una prima versione di questa voce è pubblica dal
-> 14 novembre 2026 nel repository GitHub del sito. La descrizione tecnica completa dei metodi della
-> tastiera ibrida, con le varianti, è archiviata su Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Da quella data fanno
-> parte dello stato della tecnica: nessuno può brevettarli come nuovi.
+Ho archiviato la descrizione tecnica della tastiera ibrida su Zenodo, l'archivio aperto per la ricerca
+gestito dal CERN, che assegna a ogni documento depositato un identificativo permanente, il DOI (Digital
+Object Identifier): [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465).
 
 ## Quello che do per noto
 
@@ -674,7 +673,7 @@ dell'occhio, della lingua e della persona per smettere di trattare tutto allo st
    per cambiare i tempi della tastiera.
 
 > **Avvertenza.** Kite è un progetto sperimentale e **non è un dispositivo medico certificato**; il banco
-> tobii4c-hybridbci è uno strumento di prova, non un ausilio. L'indice pupillare è un'ipotesi di
+> di prova è uno strumento sperimentale, non un ausilio. L'indice pupillare è un'ipotesi di
 > ricerca, non una misura clinica della fatica o dello stato di salute. Chi dipende da uno strumento di
 > CAA per comunicare dovrebbe avere sempre un'alternativa di riserva, per esempio una tabella alfabetica
 > su carta. Le frasi imparate possono contenere informazioni personali: restano sul computer e vanno

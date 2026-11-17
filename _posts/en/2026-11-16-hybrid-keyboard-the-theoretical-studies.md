@@ -14,7 +14,7 @@ I listed the topics from the literature that I wanted to explore for the new gaz
 to cover them in the next entry. This is that entry, for the four topics that actually made it into
 the new keyboard: **saccades**, **prediction**, **pupil** and **autocorrect**.
 
-For now the new keyboard lives in a test bench, the tobii4c-hybridbci bench. It is a Linux program
+For now the new keyboard lives in a test bench. It is a Linux program
 that reads the Tobii Eye Tracker 4C through my driver, at 90 samples per second, and puts the old
 keyboard and the new one on the same task. The new one is "hybrid" in the sense that it does not rely
 on fixation time alone: it combines eye movement, a model of the Italian language and pupil diameter.
@@ -27,10 +27,9 @@ This entry is a study note and **contains no measurements**. For each topic I de
 3. **what could change** compared with the old fixed 1 s dwell keyboard, point by point against its
    limitations. These are hypotheses to be tested, not results.
 
-> **Prior technical disclosure.** A first version of this entry has been public since
-> 14 November 2026 in the site's GitHub repository. The full technical description of the hybrid
-> keyboard methods, including variants, is archived on Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Since that date
-> they are part of the state of the art and cannot be patented as new by anyone.
+I have archived the technical description of the hybrid keyboard on Zenodo, the open research
+repository run by CERN, which assigns every deposited document a permanent identifier, the DOI (Digital
+Object Identifier): [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465).
 
 ## What I take as known
 
@@ -658,7 +657,7 @@ language and the person to stop treating everything in the same way.
    keyboard's timings.
 
 > **Disclaimer.** Kite is an experimental project and **is not a certified medical device**; the
-> tobii4c-hybridbci bench is a test tool, not an assistive device. The pupil index is a research
+> test bench is an experimental tool, not an assistive device. The pupil index is a research
 > hypothesis, not a clinical measure of fatigue or of health. Anyone who depends on an AAC tool to
 > communicate should always have a backup alternative, such as a paper alphabet board. Learned phrases
 > may contain personal information: they stay on the computer and must be protected as such. Tests with
