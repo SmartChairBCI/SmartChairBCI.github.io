@@ -178,6 +178,10 @@ il secondo fisso della vecchia tastiera: parte da quando l'occhio atterra dopo u
 La pupilla agisce solo qui: il suo indice, depurato dall'effetto della luce, può allungare i tempi quando
 il carico sale, ed è un'ipotesi ancora da verificare. Nel video, verso 3:15, la semplifico.
 
+> **Aggiornamento del 25 novembre 2026.** Nel codice pubblicato i tempi sono più lunghi: da 0,2 a 1 s
+> con la velocità predefinita. Il motivo è nella voce
+> [Kite: il codice è pubblico](/diario/kite-il-codice-e-pubblico/#che-cosa-è-cambiato-dal-video-i-tempi).
+
 Sopra la tastiera, la **barra dei suggerimenti** propone tre parole: a 5:45 scelgo «bicchiere» con un solo
 sguardo, poco dopo «acqua». Lì resta anche ciò che il **correttore** non sistema da solo. Il correttore,
 di cui parlo verso 2:45, interviene allo spazio: confronta le lettere selezionate con le parole italiane,
@@ -211,6 +215,11 @@ usarlo, studiarlo, adattarlo e **contribuire liberamente alla crescita del proge
 segnalazione, una correzione, una prova o un'idea. Quando il repository sarà online lo
 annuncerò qui nel diario e lo collegherò al record su Zenodo, così la descrizione e il codice si
 troveranno a vicenda.
+
+> **Aggiornamento del 25 novembre 2026.** Il repository è pubblico:
+> [github.com/ablescia/Kite](https://github.com/ablescia/Kite), con licenza GNU AGPL 3.0 o
+> successiva. Lo presento nella voce [Kite: il codice è pubblico](/diario/kite-il-codice-e-pubblico/).
+> Il collegamento con il record su Zenodo non c'è ancora.
 
 ## Riferimenti
 

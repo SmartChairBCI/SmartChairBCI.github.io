@@ -10,6 +10,14 @@ question: >-
 icon: kite
 status: prototype        # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ research start date
+license: GNU AGPL 3.0 or later (tobii4c-linux driver, MIT)
+links:
+  - label: Kite code (GitHub)
+    url: https://github.com/ablescia/Kite
+  - label: tobii4c-linux driver (GitHub)
+    url: https://github.com/ablescia/tobii4c-linux
+  - label: Description of the methods (Zenodo)
+    url: https://doi.org/10.5281/zenodo.24282465
 next_steps:
   - text: Estimate head pitch from the face, tested with a webcam
     done: true
@@ -51,3 +59,8 @@ The research has just started. I will document every step in the [journal](/en/j
 The methods of the new hybrid gaze keyboard have been public since 14 November 2026. Their full
 technical description, including variants, is archived on Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Since that date
 they are part of the state of the art and cannot be patented as new by anyone.
+
+Kite's code has been public on [GitHub](https://github.com/ablescia/Kite) since 25 November 2026,
+under the GNU AGPL 3.0 or later. Reading the Tobii 4C requires the
+[tobii4c-linux](https://github.com/ablescia/tobii4c-linux) driver, public since 20 November 2026
+under the MIT licence.

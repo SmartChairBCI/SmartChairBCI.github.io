@@ -10,6 +10,14 @@ question: >-
 icon: kite
 status: prototype        # idea | review | design | prototype | testing | results
 # started: 2026-01-01    # ✏️ data di avvio della ricerca
+license: GNU AGPL 3.0 o successiva (driver tobii4c-linux, MIT)
+links:
+  - label: Codice di Kite (GitHub)
+    url: https://github.com/ablescia/Kite
+  - label: Driver tobii4c-linux (GitHub)
+    url: https://github.com/ablescia/tobii4c-linux
+  - label: Descrizione dei metodi (Zenodo)
+    url: https://doi.org/10.5281/zenodo.24282465
 next_steps:
   - text: Stimare il beccheggio della testa dal viso, in prova con una webcam
     done: true
@@ -51,3 +59,8 @@ La ricerca è appena partita. Racconterò ogni passo nel [diario](/diario/).
 I metodi della nuova tastiera ibrida a sguardo sono pubblici dal 14 novembre 2026. La loro
 descrizione tecnica completa, con le varianti, è archiviata su Zenodo: [doi:10.5281/zenodo.24282465](https://doi.org/10.5281/zenodo.24282465). Da quella
 data fanno parte dello stato della tecnica: nessuno può brevettarli come nuovi.
+
+Il codice di Kite è pubblico dal 25 novembre 2026 su [GitHub](https://github.com/ablescia/Kite), con
+licenza GNU AGPL 3.0 o successiva. Per leggere il Tobii 4C serve il driver
+[tobii4c-linux](https://github.com/ablescia/tobii4c-linux), pubblico dal 20 novembre 2026 con licenza
+MIT.
