@@ -300,6 +300,11 @@ sguardo, è sotto 0,95, il tempo sale, fino a 700 ms quando vale 0,5. Lo scopo �
 "di densità" di Mott e colleghi, che rallenta i gruppi di tasti probabili vicini; qui lo ottiene il
 decodificatore, invece della disposizione dei tasti.
 
+> **Aggiornamento del 25 novembre 2026.** Questi sono i tempi del banco al momento degli studi. Nel
+> codice pubblicato di Kite vanno da 0,2 a 1 s con la velocità predefinita, proprio per il rischio
+> principale descritto più sotto. Lo racconto nella voce
+> [Kite: il codice è pubblico](/diario/kite-il-codice-e-pubblico/#che-cosa-è-cambiato-dal-video-i-tempi).
+
 **I bersagli che si espandono in modo invisibile.** Il tasto candidato lo sceglie un decodificatore
 bayesiano, nello spirito di Goodman e di Gunawardana:
 

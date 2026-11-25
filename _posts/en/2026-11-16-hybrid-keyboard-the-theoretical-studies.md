@@ -292,6 +292,11 @@ time rises, up to 700 ms when it is 0.5. The purpose is the same as Mott and col
 dwell, which slows down groups of neighbouring likely keys; here the decoder achieves it, rather than
 the layout of the keys.
 
+> **Update of 25 November 2026.** These are the bench times at the time of the studies. In Kite's
+> published code they range from 0.2 to 1 s at the default speed, precisely because of the main risk
+> described below. I tell the story in the entry
+> [Kite: the code is public](/en/journal/kite-the-code-is-public/#what-has-changed-since-the-video-the-times).
+
 **Invisibly expanding targets.** The candidate key is chosen by a Bayesian decoder, in the spirit of
 Goodman and of Gunawardana:
 

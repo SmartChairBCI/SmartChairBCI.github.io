@@ -175,6 +175,10 @@ depending on the probability of the letter (the details are in the
 The pupil acts only here: its index, cleaned of the effect of light, can lengthen the times when load
 rises, and this is a hypothesis still to be tested. In the video, around 3:15, I simplify it.
 
+> **Update of 25 November 2026.** In the published code the times are longer: from 0.2 to 1 s at the
+> default speed. The reason is in the entry
+> [Kite: the code is public](/en/journal/kite-the-code-is-public/#what-has-changed-since-the-video-the-times).
+
 Above the keyboard, the **suggestion bar** proposes three words: at 5:45 I choose «bicchiere» with a
 single glance, and shortly afterwards «acqua» (water). Whatever the **autocorrect** does not fix on its
 own also ends up there. The autocorrect, which I talk about around 2:45, steps in at the space: it
@@ -205,6 +209,11 @@ will have its own open source licence, which I will state when I publish the rep
 able to use it, study it, adapt it and **contribute freely to the growth of the project**: with a
 report, a fix, a test or an idea. When the repository is online I will announce it here in the journal
 and link it to the Zenodo record, so that the description and the code can find each other.
+
+> **Update of 25 November 2026.** The repository is public:
+> [github.com/ablescia/Kite](https://github.com/ablescia/Kite), under the GNU AGPL 3.0 or later. I
+> present it in the entry [Kite: the code is public](/en/journal/kite-the-code-is-public/). The link to
+> the Zenodo record is not there yet.
 
 ## References
 
